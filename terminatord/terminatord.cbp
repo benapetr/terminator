@@ -32,7 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Configuration.h" />
+		<Unit filename="include/Core.h" />
+		<Unit filename="include/Parser.h" />
+		<Unit filename="include/Watcher.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Configuration.cpp" />
+		<Unit filename="src/Core.cpp" />
+		<Unit filename="src/Parser.cpp" />
+		<Unit filename="src/Watcher.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
