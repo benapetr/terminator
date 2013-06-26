@@ -12,6 +12,7 @@ class Parser
         bool Parse();
     protected:
     private:
+        bool is_number(const std::string& s);
         int argc;
         char **argv;
         void ShowHelp();

@@ -24,6 +24,7 @@ class ProcessManager
         static void KillProc(pid_t pd, bool hard);
     protected:
     private:
+        static bool IgnoredId(long user);
 };
 
 #endif // PROCESSMANAGER_H

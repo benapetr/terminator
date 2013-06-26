@@ -21,6 +21,8 @@ class Configuration
         static unsigned int SoftSystemLimitMB;
         static unsigned long MemoryTotal;
         static bool DryMode;
+        static int Ignore[800];
+        static int IgnoreCount;
     protected:
     private:
 };

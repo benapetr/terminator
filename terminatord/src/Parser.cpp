@@ -21,11 +21,19 @@ void Parser::ShowHelp()
     cout << " --hard limit in MB: Set a hard memory limit" << endl;
     cout << " --ssoft limit in MB: Set a soft system memory limit" << endl;
     cout << " --shard limit in MB: Set a hard system memory limit" << endl;
+    cout << " --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces)" << endl;
     cout << " --dry: Never kill any process" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
     cout << "Terminatord version " << Configuration::Version << endl << endl;
     cout << "This software is open source licensed under GPL v. 3, see https://github.com/benapetr/terminator for source code" << endl;
+}
+
+bool Parser::is_number(const std::string& s)
+{
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
 }
 
 //! Parse the parameters for program, return true if program is supposed to stop
@@ -101,6 +109,32 @@ bool Parser::Parse()
         {
             cout << "Terminator version: " << Configuration::Version << endl;
             return true;
+        }
+        if (parameter == "--quiet")
+        {
+            Configuration::ReportOOM = false;
+            continue;
+        }
+        if (parameter == "--ignore")
+        {
+            string list = argv[curr];
+            while (list.find(",") != string::npos)
+            {
+                string id = list.substr(0, list.find(","));
+                list = list.substr(list.find(",") + 1);
+                if (is_number(id))
+                {
+                    Configuration::Ignore[Configuration::IgnoreCount] = atoi(id.c_str());
+                    Configuration::IgnoreCount++;
+                }
+            }
+            if (is_number(list))
+            {
+                Configuration::Ignore[Configuration::IgnoreCount] = atoi(list.c_str());
+                Configuration::IgnoreCount++;
+            }
+            curr++;
+            continue;
         }
         if (parameter.size() > 1 && parameter.substr(0, 1) == "-")
         {

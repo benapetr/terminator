@@ -6,6 +6,10 @@ string Configuration::Version = "1.0.0.0";
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;
 
+int Configuration::IgnoreCount = 0;
+
+int Configuration::Ignore[800];
+
 unsigned int Configuration::SoftSystemLimitMB = 0;
 
 unsigned int Configuration::HardSystemLimitMB = 0;

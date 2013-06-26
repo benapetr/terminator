@@ -28,6 +28,20 @@ void ProcessManager::KillProc(pid_t pd, bool hard)
     }
 }
 
+bool ProcessManager::IgnoredId(long user)
+{
+    int curr = 0;
+    while (curr < Configuration::IgnoreCount)
+    {
+        if (user == Configuration::Ignore[curr])
+        {
+            return true;
+        }
+        curr++;
+    }
+    return false;
+}
+
 string ProcessManager::Name(proc_t * task)
 {
     return Core::Long2String(task->tid) + " " + task->cmd + " with usage of memory: "
@@ -55,6 +69,12 @@ void ProcessManager::KillExcess()
             {
                 Core::DebugLog("Ignoring " + Core::int2String(highest->tid) + " owned by root", 6);
             }
+            continue;
+        }
+
+        if (IgnoredId(proc_info.euid))
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(highest->tid) + " owned by ignored account: " + Core::int2String(proc_info.euid), 3);
             continue;
         }
 
@@ -105,6 +125,12 @@ void ProcessManager::WarnExcess()
             continue;
         }
 
+        if (IgnoredId(proc_info.euid))
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(highest->tid) + " owned by ignored account: " + Core::int2String(proc_info.euid), 2);
+            continue;
+        }
+
         // check if this process is using most memory
         if ( proc_info.resident * 4 > Configuration::HardMemoryLimitMB * 1024 )
         {
@@ -145,6 +171,12 @@ void ProcessManager::KillHighest(bool hard)
             {
                 Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " owned by root", 6);
             }
+            continue;
+        }
+
+        if (IgnoredId(proc_info.euid))
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(highest->tid) + " owned by ignored account: " + Core::int2String(proc_info.euid), 2);
             continue;
         }
 
