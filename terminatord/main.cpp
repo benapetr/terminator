@@ -21,6 +21,6 @@ int main(int argc, char *argv[])
         return 2;
     }
     Core::Log("Terminatord v" + Configuration::Version);
-
+    Watcher::Start();
     return 0;
 }

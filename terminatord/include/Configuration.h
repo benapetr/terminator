@@ -14,6 +14,8 @@ class Configuration
         static bool KillOOM;
         static unsigned int MemoryLimitMB;
         static bool Daemon;
+        static bool KillRoot;
+        static int Interval;
     protected:
     private:
 };
