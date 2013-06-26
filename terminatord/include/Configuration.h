@@ -10,6 +10,10 @@ class Configuration
     public:
         static string Version;
         static unsigned int Verbosity;
+        static bool ReportOOM;
+        static bool KillOOM;
+        static unsigned int MemoryLimitMB;
+        static bool Daemon;
     protected:
     private:
 };
