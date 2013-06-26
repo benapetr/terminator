@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "../include/Configuration.h"
 #include "../include/Parser.h"
 #include "../include/Core.h"
@@ -11,12 +12,16 @@ Parser::Parser(int c, char *v[])
 //! Print a help for command
 void Parser::ShowHelp()
 {
-    cout << "Usage: terminatord [hkmwd]" << endl << endl;
+    cout << "Usage: terminatord [hkvd]" << endl << endl;
     cout << "Terminator daemon is killing processes that exceed some limit" << endl << endl;
     cout << "Arguments:" << endl;
     cout << " -h [--help]: Display this help" << endl;
     cout << " -k [--kill]: Will kill processes if they exceed the limits" << endl;
-    cout << " -m [limit in MB]: Set a memory limit" << endl;
+    cout << " --soft limit in MB: Set a soft memory limit" << endl;
+    cout << " --hard limit in MB: Set a hard memory limit" << endl;
+    cout << " --ssoft limit in MB: Set a soft system memory limit" << endl;
+    cout << " --shard limit in MB: Set a hard system memory limit" << endl;
+    cout << " --dry: Never kill any process" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
     cout << "Terminatord version " << Configuration::Version << endl << endl;
@@ -28,7 +33,7 @@ bool Parser::Parse()
 {
     if (argc < 2)
     {
-        cout << "Usage: terminatord [hkmwd]" << endl;
+        cout << "Usage: terminatord [hkvd]" << endl;
         return true;
     }
 
@@ -50,6 +55,41 @@ bool Parser::Parse()
         if (parameter == "-v" || parameter == "--verbose")
         {
             Configuration::Verbosity++;
+            continue;
+        }
+        if (parameter == "--ssoft")
+        {
+            Configuration::SoftSystemLimitMB = atol(argv[curr]);
+            curr++;
+            continue;
+        }
+        if (parameter == "--hard")
+        {
+            Configuration::HardMemoryLimitMB = atol(argv[curr]);
+            curr++;
+            continue;
+        }
+        if (parameter == "--soft")
+        {
+            Configuration::SoftMemoryLimitMB = atol(argv[curr]);
+            curr++;
+            continue;
+        }
+        if (parameter == "--shard")
+        {
+            Configuration::HardSystemLimitMB = atol(argv[curr]);
+            curr++;
+            continue;
+        }
+        if (parameter == "--dry")
+        {
+            Configuration::DryMode = true;
+            continue;
+        }
+        if (parameter == "-a" || parameter == "--hard")
+        {
+            Configuration::HardMemoryLimitMB = atol(argv[curr]);
+            curr++;
             continue;
         }
         if (parameter == "-d")
@@ -82,7 +122,7 @@ bool Parser::Parse()
                 }
                 if ( parameter[c] == 'd' )
                 {
-
+                    Configuration::Daemon = true;
                 }
                 c++;
             }

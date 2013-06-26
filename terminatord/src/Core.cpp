@@ -28,6 +28,20 @@ string Core::GetCurrentTime()
     return s.str();
 }
 
+string Core::Long2String(unsigned long number)
+{
+    ostringstream s;
+    s << number;
+    return s.str();
+}
+
+string Core::int2String(int number)
+{
+    ostringstream s;
+    s << number;
+    return s.str();
+}
+
 //! Log
 //! @param text Text to log
 void Core::Log(string text)
@@ -46,7 +60,7 @@ void Core::ErrorLog(string text)
 //! @param text Text to log
 void Core::DebugLog(string text, unsigned int verbosity)
 {
-    if (verbosity >= Configuration::Verbosity)
+    if (verbosity <= Configuration::Verbosity)
     {
         Log("DEBUG: " + text);
     }

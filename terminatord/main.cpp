@@ -1,5 +1,7 @@
 #include <iostream>
-
+#include <string.h>
+#include <stdio.h>
+#include <proc/readproc.h>
 #include "include/Configuration.h"
 #include "include/Parser.h"
 #include "include/Core.h"
@@ -21,6 +23,14 @@ int main(int argc, char *argv[])
         return 2;
     }
     Core::Log("Terminatord v" + Configuration::Version);
+    Core::DebugLog("Loading configuration");
+    Configuration::MemoryTotal = Watcher::GetMemTotal();
+    if (Configuration::Verbosity >= 1)
+    {
+        cout << "Debugging: " << Configuration::Verbosity << endl;
+        cout << "Detected ram: " << Configuration::MemoryTotal << endl;
+        cout << "Current ram:" << Watcher::GetFree() << endl;
+    }
     Watcher::Start();
     return 0;
 }
