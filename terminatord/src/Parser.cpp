@@ -178,7 +178,7 @@ bool Parser::Parse()
         if (parameter == "--version")
         {
             cout << "Terminator version: " << Configuration::Version << endl;
-            return true;cluster_check_list2.txt
+            return true;
         }
         if (parameter == "--quiet")
         {
