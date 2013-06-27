@@ -21,7 +21,7 @@ unsigned long Watcher::GetMemTotal()
         Running = false;
         return 0;
     }
-    return sys_info.totalram;
+    return sys_info.totalram *(unsigned long long)sys_info.mem_unit;
 }
 
 unsigned long Watcher::GetFree()
@@ -33,7 +33,7 @@ unsigned long Watcher::GetFree()
         Running = false;
         return 0;
     }
-    return sys_info.freeram;
+    return sys_info.freeram *(unsigned long long)sys_info.mem_unit;
 }
 
 void Watcher::CheckSystemLimit()

@@ -62,6 +62,6 @@ void Core::DebugLog(string text, unsigned int verbosity)
 {
     if (verbosity <= Configuration::Verbosity)
     {
-        Log("DEBUG: " + text);
+        Log("DEBUG (" + int2String(verbosity) + "): " + text);
     }
 }

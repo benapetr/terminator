@@ -21,6 +21,7 @@ void Parser::ShowHelp()
     cout << " --hard limit in MB: Set a hard memory limit" << endl;
     cout << " --ssoft limit in MB: Set a soft system memory limit" << endl;
     cout << " --shard limit in MB: Set a hard system memory limit" << endl;
+    cout << " --root: Kill even system processes if they exceed the limit" << endl;
     cout << " --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces)" << endl;
     cout << " --dry: Never kill any process" << endl;
     cout << " -d: Run in a daemon mode" << endl;
@@ -87,6 +88,11 @@ bool Parser::Parse()
         {
             Configuration::HardSystemLimitMB = atol(argv[curr]);
             curr++;
+            continue;
+        }
+        if (parameter == "--root")
+        {
+            Configuration::KillRoot = true;
             continue;
         }
         if (parameter == "--dry")
