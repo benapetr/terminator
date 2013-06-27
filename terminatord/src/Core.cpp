@@ -8,6 +8,8 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
+#include "../include/Item.h"
+#include "../include/Writer.h"
 #include "../include/Configuration.h"
 #include "../include/Core.h"
 
@@ -56,14 +58,44 @@ string Core::int2String(int number)
 //! @param text Text to log
 void Core::Log(string text)
 {
-    cout << "[" << GetCurrentTime() << "] " << text << endl;
+    switch (Configuration::Logger)
+    {
+        // syslog
+        case 0:
+            openlog("terminatord", LOG_CONS, LOG_CRIT);
+            syslog(LOG_INFO, text.c_str());
+            closelog();
+            return;
+        // stdout
+        case 1:
+            cout << "[" << GetCurrentTime() << "] " << text << endl;
+            return;
+        case 2:
+            Writer::Write(Configuration::LF, "[" + GetCurrentTime() + "] " + text);
+            return;
+    }
 }
 
 //! Log
 //! @param text Text to log
 void Core::ErrorLog(string text)
 {
-    cerr << "[" << GetCurrentTime() << "] ERROR: " << text << endl;
+switch (Configuration::Logger)
+    {
+        // syslog
+        case 0:
+            openlog("terminatord", LOG_CONS, LOG_CRIT);
+            syslog(LOG_ERR, text.c_str());
+            closelog();
+            return;
+        // stdout
+        case 1:
+            cerr << "[" << GetCurrentTime() << "] ERROR: " << text << endl;
+            return;
+        case 2:
+            Writer::Write(Configuration::LF, "[" + GetCurrentTime() + "] ERROR: " + text);
+            return;
+    }
 }
 
 //! Log
