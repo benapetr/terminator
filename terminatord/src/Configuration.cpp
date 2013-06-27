@@ -11,7 +11,7 @@
 #include "../include/Configuration.h"
 
 //! Version
-string Configuration::Version = "1.0.0.0";
+string Configuration::Version = "1.0.0.1";
 
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;
@@ -39,6 +39,8 @@ bool Configuration::KillOOM = false;
 bool Configuration::ReportOOM = true;
 
 bool Configuration::KillSelf = false;
+
+bool Configuration::Swap = true;
 
 //! If root processes can be killed too
 bool Configuration::KillRoot = false;

@@ -39,6 +39,7 @@ class Configuration
         static int Ignore[800];
         static int IgnoreCount;
         static bool Exec;
+        static bool Swap;
         static string ExecPath;
     protected:
     private:

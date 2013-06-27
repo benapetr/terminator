@@ -32,6 +32,10 @@ unsigned long Watcher::GetMemTotal()
 unsigned long Watcher::GetFree()
 {
     meminfo();
+    if (Configuration::Swap)
+    {
+        return (kb_main_free + kb_main_cached + kb_main_buffers + kb_swap_free) * 1024;
+    }
     return (kb_main_free + kb_main_cached + kb_main_buffers) * 1024;
 }
 
