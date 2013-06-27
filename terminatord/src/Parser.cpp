@@ -1,3 +1,13 @@
+ // This program is free software; you can redistribute it and/or modify
+ // it under the terms of the GNU General Public License as published by
+ // the Free Software Foundation; either version 2 of the License, or
+ // (at your option) version 3.
+
+ // This program is distributed in the hope that it will be useful,
+ // but WITHOUT ANY WARRANTY; without even the implied warranty of
+ // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ // GNU General Public License for more details.
+
 #include <cstdlib>
 #include "../include/Configuration.h"
 #include "../include/Parser.h"
@@ -24,6 +34,7 @@ void Parser::ShowHelp()
     cout << " --root: Kill even system processes if they exceed the limit" << endl;
     cout << " --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces)" << endl;
     cout << " --dry: Never kill any process" << endl;
+    cout << " --interval number in ms: Set an interval between checks in miliseconds" << endl;
     cout << " --quiet: Don't report processes that exceed the limits" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
@@ -69,25 +80,61 @@ bool Parser::Parse()
         }
         if (parameter == "--ssoft")
         {
+            string n = argv[curr];
+            if (!is_number(n))
+            {
+                Core::ErrorLog("Provided argument is not a number: " + n);
+                return true;
+            }
             Configuration::SoftSystemLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--hard")
         {
+            string n = argv[curr];
+            if (!is_number(n))
+            {
+                Core::ErrorLog("Provided argument is not a number: " + n);
+                return true;
+            }
             Configuration::HardMemoryLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--soft")
         {
+            string n = argv[curr];
+            if (!is_number(n))
+            {
+                Core::ErrorLog("Provided argument is not a number: " + n);
+                return true;
+            }
             Configuration::SoftMemoryLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--shard")
         {
+            string n = argv[curr];
+            if (!is_number(n))
+            {
+                Core::ErrorLog("Provided argument is not a number: " + n);
+                return true;
+            }
             Configuration::HardSystemLimitMB = atol(argv[curr]);
+            curr++;
+            continue;
+        }
+        if (parameter == "--interval")
+        {
+            string n = argv[curr];
+            if (!is_number(n))
+            {
+                Core::ErrorLog("Provided argument is not a number: " + n);
+                return true;
+            }
+            Configuration::Interval = atoi(argv[curr]);
             curr++;
             continue;
         }
