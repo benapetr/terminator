@@ -31,6 +31,11 @@ You can compile this application just by running
 
 If you are using ubuntu or debian you can execute script ./debian to make .deb package
 
+NOTE: You may need to switch to `Makefile_ubuntu` on older system, because default is expecting
+libprocps to exist
+
+You need to have either libprocps-dev or libproc-dev installed for it to build
+
 
 Configuration
 ==============

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ ! installers/usr ];then
+if [ ! -d installers/usr ];then
   mkdir installers/usr
 fi
 
-if [ ! installers/usr/bin ];then
+if [ ! -d installers/usr/bin ];then
   mkdir installers/usr/bin
 fi
 
