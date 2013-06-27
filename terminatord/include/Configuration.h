@@ -36,6 +36,8 @@ class Configuration
         static pid_t pid;
         static int Ignore[800];
         static int IgnoreCount;
+        static bool Exec;
+        static string ExecPath;
     protected:
     private:
 };

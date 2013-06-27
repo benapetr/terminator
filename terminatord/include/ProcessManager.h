@@ -11,6 +11,7 @@
 #ifndef PROCESSMANAGER_H
 #define PROCESSMANAGER_H
 
+#include <cstdlib>
 #include <errno.h>
 #include <iostream>
 #include <stdarg.h>
@@ -34,6 +35,7 @@ class ProcessManager
         static void KillExcess();
         static void KillProc(pid_t pd, bool hard);
     protected:
+        static void Exec(proc_t proc);
     private:
         static bool IgnoredId(long user);
 };

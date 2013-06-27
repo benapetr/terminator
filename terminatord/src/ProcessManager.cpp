@@ -10,6 +10,7 @@
 
 #include "../include/Core.h"
 #include "../include/ProcessManager.h"
+#include "../include/Watcher.h"
 #include "../include/Configuration.h"
 
 void ProcessManager::KillProc(pid_t pd, bool hard)
@@ -35,6 +36,21 @@ void ProcessManager::KillProc(pid_t pd, bool hard)
     if (result != 0)
     {
         Core::ErrorLog("Can't kill " + Core::int2String((int)pd));
+    }
+}
+
+void ProcessManager::Exec(proc_t proc)
+{
+    if (Configuration::Exec)
+    {
+        Core::DebugLog("Executing " + Configuration::ExecPath, 2);
+        string command = Configuration::ExecPath + " " +
+                            Core::int2String(proc.tid) +
+                            " " + proc.cmd +
+                            " " + Core::int2String(proc.euid) +
+                            " " + Core::Long2String(proc.resident * 4) +
+                            " " + Core::Long2String(Watcher::GetFree());
+        system(command.c_str());
     }
 }
 

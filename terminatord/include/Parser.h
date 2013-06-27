@@ -11,6 +11,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <fstream>
 #include <iostream>
 
 using namespace std;
@@ -22,10 +23,11 @@ class Parser
         bool Parse();
     protected:
     private:
-        bool is_number(const std::string& s);
         int argc;
         char **argv;
         void ShowHelp();
+        bool is_number(const std::string& s);
+        bool NextIsNumber(int next);
 };
 
 #endif // PARSER_H

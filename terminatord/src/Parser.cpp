@@ -36,10 +36,22 @@ void Parser::ShowHelp()
     cout << " --dry: Never kill any process" << endl;
     cout << " --interval number: Set an interval between checks in microseconds" << endl;
     cout << " --quiet: Don't report processes that exceed the limits" << endl;
+    cout << " --pid file: Write a pid to given file" << endl;
+    cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
     cout << "Terminatord version " << Configuration::Version << endl << endl;
     cout << "This software is open source licensed under GPL v. 3, see https://github.com/benapetr/terminator for source code" << endl;
+}
+
+bool Parser::NextIsNumber(int next)
+{
+    if (argc <= next)
+    {
+        return false;
+    }
+    string s = argv[next];
+    return is_number(s);
 }
 
 bool Parser::is_number(const std::string& s)
@@ -80,60 +92,60 @@ bool Parser::Parse()
         }
         if (parameter == "--ssoft")
         {
-            string n = argv[curr];
-            if (!is_number(n))
+            if (!NextIsNumber(curr))
             {
-                Core::ErrorLog("Provided argument is not a number: " + n);
+                Core::ErrorLog("Provided argument is not a number or is missing");
                 return true;
             }
+            string n = argv[curr];
             Configuration::SoftSystemLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--hard")
         {
-            string n = argv[curr];
-            if (!is_number(n))
+            if (!NextIsNumber(curr))
             {
-                Core::ErrorLog("Provided argument is not a number: " + n);
+                Core::ErrorLog("Provided argument is not a number or is missing");
                 return true;
             }
+            string n = argv[curr];
             Configuration::HardMemoryLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--soft")
         {
-            string n = argv[curr];
-            if (!is_number(n))
+            if (!NextIsNumber(curr))
             {
-                Core::ErrorLog("Provided argument is not a number: " + n);
+                Core::ErrorLog("Provided argument is not a number or is missing");
                 return true;
             }
+            string n = argv[curr];
             Configuration::SoftMemoryLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--shard")
         {
-            string n = argv[curr];
-            if (!is_number(n))
+            if (!NextIsNumber(curr))
             {
-                Core::ErrorLog("Provided argument is not a number: " + n);
+                Core::ErrorLog("Provided argument is not a number or is missing");
                 return true;
             }
+            string n = argv[curr];
             Configuration::HardSystemLimitMB = atol(argv[curr]);
             curr++;
             continue;
         }
         if (parameter == "--interval")
         {
-            string n = argv[curr];
-            if (!is_number(n))
+            if (!NextIsNumber(curr))
             {
-                Core::ErrorLog("Provided argument is not a number: " + n);
+                Core::ErrorLog("Provided argument is not a number or is missing");
                 return true;
             }
+            string n = argv[curr];
             Configuration::Interval = atoi(argv[curr]);
             curr++;
             continue;
@@ -186,6 +198,45 @@ bool Parser::Parse()
             {
                 Configuration::Ignore[Configuration::IgnoreCount] = atoi(list.c_str());
                 Configuration::IgnoreCount++;
+            }
+            curr++;
+            continue;
+        }
+        if (parameter == "--exec")
+        {
+            if (argc <= curr)
+            {
+                Core::ErrorLog("You need to provide a path to binary");
+                return true;
+            }
+            Configuration::ExecPath = argv[curr];
+            curr++;
+            Configuration::Exec = true;
+            continue;
+        }
+        if (parameter == "--pid")
+        {
+            if (argc <= curr)
+            {
+                Core::ErrorLog("You need to provide a path to file");
+                return true;
+            }
+            string fl = argv[curr];
+            try
+            {
+                fstream filestr;
+                filestr.open (argv[curr], fstream::in | fstream::out | fstream::trunc);
+                if (filestr.rdstate() & std::ifstream::failbit)
+                {
+                    Core::DebugLog("Error openning " + fl, 0);
+                    return true;
+                }
+                filestr << Configuration::pid <<endl;
+                filestr.close();
+            } catch (exception code)
+            {
+                Core::DebugLog("Unable to write to " + fl + " error: " + code.what(), 0);
+                return true;
             }
             curr++;
             continue;

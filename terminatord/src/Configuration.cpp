@@ -24,6 +24,10 @@ unsigned int Configuration::SoftSystemLimitMB = 0;
 
 unsigned int Configuration::HardSystemLimitMB = 0;
 
+string Configuration::ExecPath = "";
+
+bool Configuration::Exec = false;
+
 //! Whether processes should be killed when they exceed certain memory limit
 bool Configuration::KillOOM = false;
 
