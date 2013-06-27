@@ -36,6 +36,14 @@ libprocps to exist
 
 You need to have either libprocps-dev or libproc-dev installed for it to build
 
+Example installation on ubuntu:
+
+    sudo apt-get install make g++ fakeroot libproc-dev
+    cd terminatord
+    mv Makefile_ubuntu Makefile
+    ./debian
+    sudo dpkg -i terminatord.deb
+
 
 Configuration
 ==============
