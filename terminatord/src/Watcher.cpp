@@ -1,10 +1,3 @@
-#include <unistd.h>
-#include <limits>
-#include <sys/sysinfo.h>
-#include <fstream>
-#include <proc/readproc.h>
-#include <sys/resource.h>
-#include <signal.h>
 #include "../include/ProcessManager.h"
 #include "../include/Core.h"
 #include "../include/Configuration.h"
@@ -26,14 +19,8 @@ unsigned long Watcher::GetMemTotal()
 
 unsigned long Watcher::GetFree()
 {
-    struct sysinfo sys_info;
-    if(sysinfo(&sys_info) != 0)
-    {
-        Core::ErrorLog("Unable to retrieve system information");
-        Running = false;
-        return 0;
-    }
-    return sys_info.freeram *(unsigned long long)sys_info.mem_unit;
+    meminfo();
+    return (kb_main_free + kb_main_cached + kb_main_buffers) * 1024;
 }
 
 void Watcher::CheckSystemLimit()

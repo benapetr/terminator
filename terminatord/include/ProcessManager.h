@@ -2,6 +2,7 @@
 #define PROCESSMANAGER_H
 
 #include <errno.h>
+#include <iostream>
 #include <stdarg.h>
 #include <string.h>
 #include <unistd.h>
