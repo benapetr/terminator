@@ -63,6 +63,12 @@ void ProcessManager::KillExcess()
 
     while (readproc(proc, &proc_info) != NULL)
     {
+        if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
+            continue;
+        }
+
         if (!Configuration::KillRoot && (int)proc_info.euid == 0)
         {
             if (Configuration::Verbosity >= 6)
@@ -122,6 +128,12 @@ void ProcessManager::WarnExcess()
             continue;
         }
 
+        if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
+            continue;
+        }
+
         if (IgnoredId(proc_info.euid))
         {
             Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " owned by ignored account: " + Core::int2String(proc_info.euid), 2);
@@ -176,6 +188,12 @@ void ProcessManager::KillHighest(bool hard)
         if (IgnoredId(proc_info.euid))
         {
             Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " owned by ignored account: " + Core::int2String(proc_info.euid), 2);
+            continue;
+        }
+
+        if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
+        {
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
             continue;
         }
 

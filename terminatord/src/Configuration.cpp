@@ -20,8 +20,12 @@ bool Configuration::KillOOM = false;
 //! Whether processes should be reported when they exceed certain memory limit
 bool Configuration::ReportOOM = true;
 
+bool Configuration::KillSelf = false;
+
 //! If root processes can be killed too
 bool Configuration::KillRoot = false;
+
+pid_t Configuration::pid = getpid();
 
 //! Limit for processes to kill with sigterm
 unsigned int Configuration::HardMemoryLimitMB = 64;

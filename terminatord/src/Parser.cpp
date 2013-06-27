@@ -24,6 +24,7 @@ void Parser::ShowHelp()
     cout << " --root: Kill even system processes if they exceed the limit" << endl;
     cout << " --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces)" << endl;
     cout << " --dry: Never kill any process" << endl;
+    cout << " --quiet: Don't report processes that exceed the limits" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
     cout << "Terminatord version " << Configuration::Version << endl << endl;

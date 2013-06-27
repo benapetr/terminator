@@ -17,10 +17,12 @@ class Configuration
         static bool Daemon;
         static bool KillRoot;
         static int Interval;
+        static bool KillSelf;
         static unsigned int HardSystemLimitMB;
         static unsigned int SoftSystemLimitMB;
         static unsigned long MemoryTotal;
         static bool DryMode;
+        static pid_t pid;
         static int Ignore[800];
         static int IgnoreCount;
     protected:
