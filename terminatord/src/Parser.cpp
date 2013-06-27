@@ -40,6 +40,7 @@ void Parser::ShowHelp()
     cout << " --pid file: Write a pid to given file" << endl;
     cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
     cout << " --syslog: write to syslog" << endl;
+    cout << " --noprotectoom: doesn't protect self agains the kernel oom killer" << endl;
     cout << " --ignoreswap: will not count swap to free memory (will kill processes even if there is space in swap)" << endl;
     cout << " --log file: write to a file" << endl;
     cout << " -d: Run in a daemon mode" << endl;
@@ -265,6 +266,11 @@ bool Parser::Parse()
                 return true;
             }
             curr++;
+            continue;
+        }
+        if (parameter == "--noprotectoom")
+        {
+            Configuration::ProtectSelf = false;
             continue;
         }
         if (parameter.size() > 1 && parameter.substr(0, 1) == "-")

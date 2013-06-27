@@ -11,7 +11,7 @@
 #include "../include/Configuration.h"
 
 //! Version
-string Configuration::Version = "1.0.0.1";
+string Configuration::Version = "1.0.0.2";
 
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;
@@ -31,6 +31,9 @@ unsigned int Configuration::HardSystemLimitMB = 0;
 string Configuration::ExecPath = "";
 
 bool Configuration::Exec = false;
+
+//! Protect against kernel OOM killer
+bool Configuration::ProtectSelf = true;
 
 //! Whether processes should be killed when they exceed certain memory limit
 bool Configuration::KillOOM = false;

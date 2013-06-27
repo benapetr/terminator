@@ -31,6 +31,7 @@ class Configuration
         static bool KillRoot;
         static int Interval;
         static bool KillSelf;
+        static bool ProtectSelf;
         static unsigned int HardSystemLimitMB;
         static unsigned int SoftSystemLimitMB;
         static unsigned long MemoryTotal;

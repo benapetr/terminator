@@ -56,6 +56,12 @@ void Watcher::CheckSystemLimit()
         {
             Core::Log("System is out of memory, only " + Core::Long2String(free) + " bytes remaining, hard killing random process");
             ProcessManager::KillHighest(true);
+            // in case we are still short of memory, and not in dry mode, we need to do something
+            while (((unsigned long)Configuration::HardSystemLimitMB * 1024 * 1024) > free && !Configuration::DryMode)
+            {
+                Core::Log("System is out of memory, only " + Core::Long2String(free) + " bytes remaining, hard killing random process");
+                ProcessManager::KillHighest(true);
+            }
         } else
         {
             if (Configuration::Verbosity >= 8)
@@ -102,9 +108,36 @@ void Watcher::CheckUserLimit()
     }
 }
 
+bool Watcher::ProtectSelf()
+{
+    if (Configuration::ProtectSelf)
+    {
+        string file ="/proc/" + Core::int2String(Configuration::pid) + "/oomadj";
+        Core::DebugLog("Removing own entry from kernel OOM");
+        try
+        {
+            fstream filestr;
+            filestr.open (file, fstream::in | fstream::out | fstream::trunc);
+            if (filestr.rdstate() & std::ifstream::failbit)
+            {
+                Core::DebugLog("Error openning " + file, 0);
+                return false;
+            }
+            filestr << "-17" <<endl;
+            filestr.close();
+        } catch (exception code)
+        {
+            Core::DebugLog("Unable to write to " + file + " error: " + code.what(), 0);
+        }
+        return true;
+    }
+    return false;
+}
+
 void Watcher::Start()
 {
     Running = true;
+    ProtectSelf();
     while (Running)
     {
         Core::DebugLog("Looping", 8);

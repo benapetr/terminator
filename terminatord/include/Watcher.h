@@ -29,6 +29,7 @@ class Watcher
         static bool Running;
         static unsigned long GetMemTotal();
         static unsigned long GetFree();
+        static bool ProtectSelf();
     protected:
     private:
         static void CheckSystemLimit();
