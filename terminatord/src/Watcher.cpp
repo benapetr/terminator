@@ -56,11 +56,13 @@ void Watcher::CheckSystemLimit()
         {
             Core::Log("System is out of memory, only " + Core::Long2String(free) + " bytes remaining, hard killing random process");
             ProcessManager::KillHighest(true);
+            free = Watcher::GetFree();
             // in case we are still short of memory, and not in dry mode, we need to do something
             while (((unsigned long)Configuration::HardSystemLimitMB * 1024 * 1024) > free && !Configuration::DryMode)
             {
                 Core::Log("System is out of memory, only " + Core::Long2String(free) + " bytes remaining, hard killing random process");
                 ProcessManager::KillHighest(true);
+                free = Watcher::GetFree();
             }
         } else
         {
