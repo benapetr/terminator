@@ -114,7 +114,7 @@ bool Watcher::ProtectSelf()
 {
     if (Configuration::ProtectSelf)
     {
-        string file ="/proc/" + Core::int2String(Configuration::pid) + "/oom_adj";
+        string file ="/proc/" + Core::int2String(Configuration::pid) + "/oom_score_adj";
         Core::DebugLog("Removing own entry from kernel OOM");
         try
         {
