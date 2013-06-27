@@ -62,7 +62,6 @@ do_stop()
         start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
         RETVAL="$?"
         if [ -f "$PIDFILE" ];then
-            kill -9 `cat "$PIDFILE"`
             rm -f "$PIDFILE"
         fi
         [ "$RETVAL" = 2 ] && return 2

@@ -1,4 +1,6 @@
 #!/bin/sh
 
+echo "Stopping all instances of terminatord"
+service terminatord stop
 
 exit 0
