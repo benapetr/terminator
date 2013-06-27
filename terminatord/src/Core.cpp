@@ -40,6 +40,8 @@ string Core::GetCurrentTime()
     return s.str();
 }
 
+//! Convert long to string
+//! @param number Item to convert
 string Core::Long2String(unsigned long number)
 {
     ostringstream s;
@@ -47,6 +49,8 @@ string Core::Long2String(unsigned long number)
     return s.str();
 }
 
+//! Convert number to string
+//! @param number Item to convert
 string Core::int2String(int number)
 {
     ostringstream s;

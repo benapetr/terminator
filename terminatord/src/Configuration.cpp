@@ -16,12 +16,16 @@ string Configuration::Version = "1.0.0.0";
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;
 
+//! Number of items in ignore list
 int Configuration::IgnoreCount = 0;
 
+//! List of uid to ignore
 int Configuration::Ignore[800];
 
+//! Value that specifies when processes needs to be killed
 unsigned int Configuration::SoftSystemLimitMB = 0;
 
+//! Value that specifies when processes needs to be killed
 unsigned int Configuration::HardSystemLimitMB = 0;
 
 string Configuration::ExecPath = "";

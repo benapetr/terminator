@@ -13,6 +13,7 @@
 #include "../include/Configuration.h"
 #include "../include/Watcher.h"
 
+//! Return if watcher is running, changing this to false terminate it
 bool Watcher::Running = false;
 
 unsigned long Watcher::GetMemTotal()
@@ -27,12 +28,14 @@ unsigned long Watcher::GetMemTotal()
     return sys_info.totalram *(unsigned long long)sys_info.mem_unit;
 }
 
+//! Return free memory without buffers
 unsigned long Watcher::GetFree()
 {
     meminfo();
     return (kb_main_free + kb_main_cached + kb_main_buffers) * 1024;
 }
 
+//! Given that user enabled this it will check and kill processes that are exceeding system limit
 void Watcher::CheckSystemLimit()
 {
     Core::DebugLog("Checking system limit", 2);
@@ -75,6 +78,7 @@ void Watcher::CheckSystemLimit()
     }
 }
 
+//! Check user limits
 void Watcher::CheckUserLimit()
 {
     Core::DebugLog("Checking processes", 2);
