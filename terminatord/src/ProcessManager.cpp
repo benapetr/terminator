@@ -91,7 +91,7 @@ void ProcessManager::KillExcess()
     {
         if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon", 8);
             continue;
         }
 
@@ -116,11 +116,13 @@ void ProcessManager::KillExcess()
             Core::Log("Exceeded hard limit - process " + Name(&proc_info) + " killing now");
 
             KillProc((pid_t)proc_info.tid, true);
+            Exec(proc_info);
         } else if ( proc_info.resident * 4 > ((long)Configuration::SoftMemoryLimitMB * 1024 ))
         {
             Core::Log("Exceeded soft limit - process " + Name(&proc_info) + " killing now");
 
             KillProc((pid_t)proc_info.tid, false);
+            Exec(proc_info);
         } else
         {
             if (Configuration::Verbosity > 12)
@@ -156,7 +158,7 @@ void ProcessManager::WarnExcess()
 
         if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon", 6);
             continue;
         }
 
@@ -219,7 +221,7 @@ void ProcessManager::KillHighest(bool hard)
 
         if (proc_info.tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon");
+            Core::DebugLog("Ignoring " + Core::int2String(proc_info.tid) + " which is current instance of this daemon", 6);
             continue;
         }
 
@@ -263,6 +265,7 @@ void ProcessManager::KillHighest(bool hard)
 
     Core::Log("Most preferred process has score " + Core::int2String(current_score) + " : " + Name(&highest) +  " killing now");
 
+    Exec(highest);
     KillProc((pid_t)highest.tid, hard);
 
     closeproc(proc);

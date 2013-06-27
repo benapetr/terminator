@@ -27,6 +27,10 @@ int main(int argc, char *argv[])
         return 0;
     }
     delete parser;
+    if (Configuration::Logger == 2)
+    {
+        Writer::Load();
+    }
     if (!Configuration::Daemon)
     {
         Core::ErrorLog("Nothing to do");
@@ -39,7 +43,23 @@ int main(int argc, char *argv[])
     {
         cout << "Debugging: " << Configuration::Verbosity << endl;
         cout << "Detected ram: " << Configuration::MemoryTotal << endl;
-        cout << "Current ram:" << Watcher::GetFree() << endl;
+        cout << "Free ram: " << Watcher::GetFree() << endl;
+        if (Configuration::KillOOM)
+        {
+            cout << "Will kill processes that exceed the limits" << endl;
+        }
+        if (Configuration::KillRoot)
+        {
+            cout << "Will kill root processes as well" << endl;
+        }
+        if (Configuration::Exec)
+        {
+            cout << "I will run on every kill: " << Configuration::ExecPath << endl;
+        }
+        if (Configuration::DryMode)
+        {
+            cout << "In fact, I will not kill anything, because of dry option" << endl;
+        }
     }
     Watcher::Start();
     return 0;

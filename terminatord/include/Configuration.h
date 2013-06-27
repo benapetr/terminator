@@ -26,6 +26,8 @@ class Configuration
         static unsigned int HardMemoryLimitMB;
         static unsigned int SoftMemoryLimitMB;
         static bool Daemon;
+        static string LF;
+        static int Logger;
         static bool KillRoot;
         static int Interval;
         static bool KillSelf;

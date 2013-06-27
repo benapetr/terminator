@@ -10,6 +10,7 @@
 
 #include <cstdlib>
 #include "../include/Configuration.h"
+#include "../include/Writer.h"
 #include "../include/Parser.h"
 #include "../include/Core.h"
 
@@ -38,6 +39,8 @@ void Parser::ShowHelp()
     cout << " --quiet: Don't report processes that exceed the limits" << endl;
     cout << " --pid file: Write a pid to given file" << endl;
     cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
+    cout << " --syslog: write to syslog" << endl;
+    cout << " --log file: write to a file" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
     cout << "Terminatord version " << Configuration::Version << endl << endl;
@@ -181,6 +184,23 @@ bool Parser::Parse()
             Configuration::ReportOOM = false;
             continue;
         }
+        if (parameter == "--log")
+        {
+            if (argc <= curr)
+            {
+                Core::ErrorLog("You need to provide a path to file");
+                return true;
+            }
+            Configuration::LF = argv[curr];
+            curr++;
+            Configuration::Logger = 2;
+            continue;
+        }
+        if (parameter == "--syslog")
+        {
+            Configuration::Logger = 0;
+            continue;
+        }
         if (parameter == "--ignore")
         {
             string list = argv[curr];
@@ -228,14 +248,14 @@ bool Parser::Parse()
                 filestr.open (argv[curr], fstream::in | fstream::out | fstream::trunc);
                 if (filestr.rdstate() & std::ifstream::failbit)
                 {
-                    Core::DebugLog("Error openning " + fl, 0);
+                    Core::ErrorLog("Error openning " + fl);
                     return true;
                 }
                 filestr << Configuration::pid <<endl;
                 filestr.close();
             } catch (exception code)
             {
-                Core::DebugLog("Unable to write to " + fl + " error: " + code.what(), 0);
+                Core::ErrorLog("Unable to write to " + fl + " error: " + code.what());
                 return true;
             }
             curr++;

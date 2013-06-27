@@ -39,13 +39,17 @@ bool Configuration::KillSelf = false;
 //! If root processes can be killed too
 bool Configuration::KillRoot = false;
 
+string Configuration::LF = "/var/log/terminator.log";
+
+int Configuration::Logger = 1;
+
 pid_t Configuration::pid = getpid();
 
 //! Limit for processes to kill with sigterm
-unsigned int Configuration::HardMemoryLimitMB = 64;
+unsigned int Configuration::HardMemoryLimitMB = 640;
 
 //! Limit for processes to kill
-unsigned int Configuration::SoftMemoryLimitMB = 32;
+unsigned int Configuration::SoftMemoryLimitMB = 620;
 
 unsigned long Configuration::MemoryTotal = 0;
 

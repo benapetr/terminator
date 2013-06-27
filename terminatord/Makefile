@@ -40,9 +40,9 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = bin/Release/terminatord
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/src/Configuration.o $(OBJDIR_DEBUG)/src/Core.o $(OBJDIR_DEBUG)/src/Parser.o $(OBJDIR_DEBUG)/src/ProcessManager.o $(OBJDIR_DEBUG)/src/Watcher.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/src/Configuration.o $(OBJDIR_DEBUG)/src/Writer.o $(OBJDIR_DEBUG)/src/Core.o $(OBJDIR_DEBUG)/src/Parser.o $(OBJDIR_DEBUG)/src/ProcessManager.o $(OBJDIR_DEBUG)/src/Watcher.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/src/Configuration.o $(OBJDIR_RELEASE)/src/Core.o $(OBJDIR_RELEASE)/src/Parser.o $(OBJDIR_RELEASE)/src/ProcessManager.o $(OBJDIR_RELEASE)/src/Watcher.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/src/Configuration.o $(OBJDIR_RELEASE)/src/Writer.o $(OBJDIR_RELEASE)/src/Core.o $(OBJDIR_RELEASE)/src/Parser.o $(OBJDIR_RELEASE)/src/ProcessManager.o $(OBJDIR_RELEASE)/src/Watcher.o
 
 all: debug release
 
@@ -65,6 +65,9 @@ $(OBJDIR_DEBUG)/main.o: main.cpp
 
 $(OBJDIR_DEBUG)/src/Configuration.o: src/Configuration.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/Configuration.cpp -o $(OBJDIR_DEBUG)/src/Configuration.o
+
+$(OBJDIR_DEBUG)/src/Writer.o: src/Writer.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/Writer.cpp -o $(OBJDIR_DEBUG)/src/Writer.o
 
 $(OBJDIR_DEBUG)/src/Core.o: src/Core.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/Core.cpp -o $(OBJDIR_DEBUG)/src/Core.o
@@ -101,6 +104,9 @@ $(OBJDIR_RELEASE)/main.o: main.cpp
 
 $(OBJDIR_RELEASE)/src/Configuration.o: src/Configuration.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/Configuration.cpp -o $(OBJDIR_RELEASE)/src/Configuration.o
+
+$(OBJDIR_RELEASE)/src/Configuration.o: src/Writer.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/Writer.cpp -o $(OBJDIR_RELEASE)/src/Writer.o
 
 $(OBJDIR_RELEASE)/src/Core.o: src/Core.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/Core.cpp -o $(OBJDIR_RELEASE)/src/Core.o
