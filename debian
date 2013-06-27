@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [ ! installers/usr ];then
+  mkdir installers/usr
+fi
+
+if [ ! installers/usr/bin ];then
+  mkdir installers/usr/bin
+fi
+
 cd terminatord
 make || exit 1
 cp bin/Release/terminatord ../installers/usr/bin/

@@ -12,7 +12,6 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="System resources watchdog"
 NAME=terminatord
-#DAEMON="/usr/bin/pidgeon-sv"
 DAEMON="/usr/bin/terminatord"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME

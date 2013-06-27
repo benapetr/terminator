@@ -29,8 +29,7 @@ Build
 You can compile this application just by running
     make
 
-
-
+If you are using ubuntu or debian you can execute script ./debian to make .deb package
 
 
 Configuration
