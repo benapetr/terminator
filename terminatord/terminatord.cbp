@@ -38,15 +38,19 @@
 		</Compiler>
 		<Unit filename="include/Configuration.h" />
 		<Unit filename="include/Core.h" />
+		<Unit filename="include/Item.h" />
 		<Unit filename="include/Parser.h" />
 		<Unit filename="include/ProcessManager.h" />
 		<Unit filename="include/Watcher.h" />
+		<Unit filename="include/Writer.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Configuration.cpp" />
 		<Unit filename="src/Core.cpp" />
+		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Parser.cpp" />
 		<Unit filename="src/ProcessManager.cpp" />
 		<Unit filename="src/Watcher.cpp" />
+		<Unit filename="src/Writer.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
