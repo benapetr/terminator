@@ -40,6 +40,7 @@ void Parser::ShowHelp()
     cout << " --pid file: Write a pid to given file" << endl;
     cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
     cout << " --syslog: write to syslog" << endl;
+    cout << " --ignoreswap: will not count swap to free memory (will kill processes even if there is space in swap)" << endl;
     cout << " --log file: write to a file" << endl;
     cout << " -d: Run in a daemon mode" << endl;
     cout << " -v [--verbose]: Increase verbosity" << endl << endl;
@@ -177,7 +178,7 @@ bool Parser::Parse()
         if (parameter == "--version")
         {
             cout << "Terminator version: " << Configuration::Version << endl;
-            return true;
+            return true;cluster_check_list2.txt
         }
         if (parameter == "--quiet")
         {
@@ -220,6 +221,11 @@ bool Parser::Parse()
                 Configuration::IgnoreCount++;
             }
             curr++;
+            continue;
+        }
+        if (parameter == "--ignoreswap")
+        {
+            Configuration::Swap = false;
             continue;
         }
         if (parameter == "--exec")
