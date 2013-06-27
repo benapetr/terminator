@@ -21,19 +21,27 @@
 #include <list>
 #include <mutex>
 #include <pthread.h>
+#include "Item.h"
 
 using namespace std;
 
 class Writer
 {
     public:
+        static void Write(string file, string text);
         static void Load();
+        static void Terminate();
     protected:
     private:
-        static void *Exec();
+        static void *Exec(void *threadid);
         static list<Item> DB;
         static pthread_t thread;
         static bool isRunning;
+        static std::mutex &data_mut()
+        {
+            static std::mutex m;
+            return m;
+        }
 };
 
 #endif // WRITER_H

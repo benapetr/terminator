@@ -12,6 +12,7 @@
 #define CORE_H
 
 #include <sstream>
+#include <syslog.h>
 #include <iostream>
 
 using namespace std;

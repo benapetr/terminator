@@ -12,7 +12,7 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -Wall -fexceptions
+CFLAGS = -Wall -fexceptions -std=gnu++11
 RESINC = 
 LIBDIR = 
 LIB = 
@@ -23,7 +23,7 @@ CFLAGS_DEBUG = $(CFLAGS) -g
 RESINC_DEBUG = $(RESINC)
 RCFLAGS_DEBUG = $(RCFLAGS)
 LIBDIR_DEBUG = $(LIBDIR)
-LIB_DEBUG = $(LIB)-lprocps
+LIB_DEBUG = $(LIB)-lprocps -lpthread
 LDFLAGS_DEBUG = $(LDFLAGS)
 OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 

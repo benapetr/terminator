@@ -1,6 +1,7 @@
 #include "../include/Configuration.h"
 #include "../include/Core.h"
 #include "../include/Writer.h"
+#include "../include/Item.h"
 
 
 //! This function is exec of thread of writer

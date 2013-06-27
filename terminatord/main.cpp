@@ -14,6 +14,7 @@
 #include <proc/readproc.h>
 #include "include/Configuration.h"
 #include "include/Parser.h"
+#include "include/Writer.h"
 #include "include/Core.h"
 #include "include/Watcher.h"
 
