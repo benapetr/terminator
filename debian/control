@@ -1,0 +1,16 @@
+Source: terminatord
+Section: utils
+Priority: optional
+Maintainer: Petr Bena <benapetr@gmail.com>
+Uploaders: Carl Fürstenberg <azatoth@gmail.com>
+Build-Depends: debhelper (>= 9), libprocps1-dev (>= 3.3.6)
+Standards-Version: 3.9.3
+#Vcs-Git: git://git.debian.org/collab-maint/terminatord.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/terminatord.git;a=summary
+
+Package: terminatord
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Terminator daemon
+ A terminator daemon which can watch the system resources and automatically
+ clean unwanted processes to prevent system going out of memory
