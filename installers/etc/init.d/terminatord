@@ -16,8 +16,13 @@ DAEMON="/usr/bin/terminatord"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 FOLDER=/tmp
+#OBSOLETE
 DAEMON_ARGS="-d --quiet --shard 20 --ssoft 100 --syslog --pid $PIDFILE"
 SERVICE_USER=root
+
+if [ -f /etc/terminator.conf ];then
+  DAEMON_ARGS="`cat /etc/terminator.conf | sed 's/^\/\///'` --pid $PIDFILE"
+fi
 
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh

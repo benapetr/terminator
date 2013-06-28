@@ -9,6 +9,7 @@ if [ ! -d installers/usr/bin ];then
 fi
 
 cd terminatord
+./configure || exit 1
 make || exit 1
 cp bin/Release/terminatord ../installers/usr/bin/
 cd ..
