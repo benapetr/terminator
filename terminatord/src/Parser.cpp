@@ -27,10 +27,12 @@ void Parser::ShowHelp()
     cout << "Terminator daemon is killing processes that exceed some limit" << endl << endl;
     cout << "Arguments:" << endl;
     cout << " -h [--help]: Display this help" << endl;
-    cout << " -k [--kill]: Will kill processes if they exceed the limits" << endl;
-    cout << " --soft limit in MB: Set a soft memory limit" << endl;
-    cout << " --hard limit in MB: Set a hard memory limit" << endl;
-    cout << " --ssoft limit in MB: Set a soft system memory limit" << endl;
+    cout << " -k [--kill]: Will kill processes if they exceed the limits, if this is not enabled," << endl;
+    cout << "              the processes that exceed the limit will be only reported" << endl;
+    cout << " --soft limit in MB: Set a soft memory limit for processes (will be killed if they exceed it)" << endl;
+    cout << " --hard limit in MB: Set a hard memory limit for processes (will be killed with -9 if they exceed it)" << endl;
+    cout << " --ssoft limit in MB: Set a soft system memory limit (daemon will attempt to clear memory" << endl;
+    cout << "                      when system has less than this amount of ram" << endl;
     cout << " --shard limit in MB: Set a hard system memory limit" << endl;
     cout << " --root: Kill even system processes if they exceed the limit" << endl;
     cout << " --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces)" << endl;
@@ -40,7 +42,7 @@ void Parser::ShowHelp()
     cout << " --pid file: Write a pid to given file" << endl;
     cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
     cout << " --syslog: write to syslog" << endl;
-    cout << " --noprotectoom: doesn't protect self agains the kernel oom killer" << endl;
+    cout << " --noprotectoom: doesn't protect self against the kernel oom killer" << endl;
     cout << " --ignoreswap: will not count swap to free memory (will kill processes even if there is space in swap)" << endl;
     cout << " --log file: write to a file" << endl;
     cout << " -d: Run in a daemon mode" << endl;
