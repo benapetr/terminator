@@ -11,7 +11,7 @@
 #include "../include/Configuration.h"
 
 //! Version
-string Configuration::Version = "1.0.0.2";
+string Configuration::Version = "1.0.2.0";
 
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;
