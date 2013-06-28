@@ -17,6 +17,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <string.h>
 #include <stdio.h>
@@ -35,7 +36,7 @@ class ProcessManager
         static void KillExcess();
         static void KillProc(pid_t pd, bool hard);
     protected:
-        static void Exec(proc_t proc);
+        static void Exec(proc_t* proc);
     private:
         static bool IgnoredId(long user);
 };

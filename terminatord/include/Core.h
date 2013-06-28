@@ -25,6 +25,7 @@ class Core
         static void ErrorLog(string text);
         static string int2String(int number);
         static string Long2String(unsigned long number);
+        static int GetOom(pid_t pid);
     protected:
     private:
         static string GetCurrentTime();

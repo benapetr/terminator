@@ -21,12 +21,12 @@ class Parser
     public:
         Parser(int c, char *v[]);
         bool Parse();
+        static bool is_number(const std::string& s);
     protected:
     private:
         int argc;
         char **argv;
         void ShowHelp();
-        bool is_number(const std::string& s);
         bool NextIsNumber(int next);
 };
 

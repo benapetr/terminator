@@ -10,6 +10,7 @@
 
 #include "../include/Item.h"
 #include "../include/Writer.h"
+#include "../include/Parser.h"
 #include "../include/Configuration.h"
 #include "../include/Core.h"
 
@@ -38,6 +39,22 @@ string Core::GetCurrentTime()
     << DecimalNumber(now->tm_hour) << ":" << DecimalNumber(now->tm_min)
     << ":" << DecimalNumber(now->tm_sec);
     return s.str();
+}
+
+int Core::GetOom(pid_t pid)
+{
+    ifstream f;
+    string path = "/proc/" + int2String((int)pid) + "/oom_score_adj";
+    f.open(path);
+    if(f.is_open())
+    {
+        string text;
+        f >> text;
+        f.close();
+        return atoi(text.c_str());
+    }
+    f.close();
+    return 0;
 }
 
 //! Convert long to string
