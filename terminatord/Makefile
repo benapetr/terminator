@@ -12,10 +12,10 @@ LD = g++
 WINDRES = windres
 
 INC = 
-CFLAGS = -Wall -fexceptions -std=gnu++11
+CFLAGS = -Wall -fexceptions -std=c++0x
 RESINC = 
 LIBDIR = 
-LIB = -lprocps -lpthread
+LIB = -lproc -lpthread
 LDFLAGS = 
 
 INC_DEBUG = $(INC)
