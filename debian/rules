@@ -4,9 +4,15 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-%:
-	dh $@ --sourcedirectory=terminatord
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS=1
+include /usr/share/dpkg/buildflags.mk
 
+%:
+	dh $@
 
 override_dh_auto_build:
-	dh_auto_build $@ -- -f Makefile_debian
+	scons --directory terminatord
+
+override_dh_auto_clean:
+	scons --directory terminatord --clean
