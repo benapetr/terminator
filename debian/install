@@ -1,2 +1,2 @@
-terminatord/bin/Release/terminatord /usr/bin
+terminatord/terminatord /usr/bin
 debian/terminatord.conf /etc
