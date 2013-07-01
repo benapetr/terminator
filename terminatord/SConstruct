@@ -1,0 +1,11 @@
+import os
+env=Environment(LIBS = ['pthread'])
+env.Append(CPPFLAGS = os.environ['CPPFLAGS'],
+           CXXFLAGS = os.environ['CXXFLAGS'],
+           LDFLAGS = os.environ['LDFLAGS'])
+env.Append(CXXFLAGS = ["--std=c++0x"])
+env.ParseConfig('pkg-config --cflags --libs libprocps')
+
+terminatord = env.Program('terminatord', ['main.cpp', Glob('src/*.cpp')])
+env.Install('/usr/bin', terminatord)
+env.Alias('install', '/usr/bin')
