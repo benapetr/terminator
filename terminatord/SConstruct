@@ -1,8 +1,17 @@
 import os
 env=Environment(LIBS = ['pthread'])
-env.Append(CPPFLAGS = os.environ['CPPFLAGS'],
-           CXXFLAGS = os.environ['CXXFLAGS'],
-           LDFLAGS = os.environ['LDFLAGS'])
+if 'CPPFLAGS' in os.environ:
+    env.Append(CPPFLAGS = os.environ['CPPFLAGS'])
+
+if 'CXXFLAGS' in os.environ:
+    env.Append(CXXFLAGS = os.environ['CXXFLAGS'])
+
+if 'CCFLAGS' in os.environ:
+    env.Append(LDFLAGS = os.environ['CCFLAGS'])
+
+if 'LDFLAGS' in os.environ:
+    env.Append(LDFLAGS = os.environ['LDFLAGS'])
+
 env.Append(CXXFLAGS = ["--std=c++0x"])
 env.ParseConfig('pkg-config --cflags --libs libprocps')
 
