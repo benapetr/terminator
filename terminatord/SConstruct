@@ -10,7 +10,7 @@ if 'CCFLAGS' in os.environ:
     env.Append(LDFLAGS = os.environ['CCFLAGS'])
 
 if 'LDFLAGS' in os.environ:
-    env.Append(LDFLAGS = os.environ['LDFLAGS'])
+    env.Append(LINKFLAGS = os.environ['LDFLAGS'])
 
 env.Append(CXXFLAGS = ["--std=c++0x"])
 env.ParseConfig('pkg-config --cflags --libs libprocps')
