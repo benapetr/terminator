@@ -84,7 +84,7 @@ void Core::Log(string text)
         // syslog
         case 0:
             openlog("terminatord", LOG_CONS, LOG_CRIT);
-            syslog(LOG_INFO, text.c_str());
+            syslog(LOG_INFO, "%s", text.c_str());
             closelog();
             return;
         // stdout
@@ -106,7 +106,7 @@ switch (Configuration::Logger)
         // syslog
         case 0:
             openlog("terminatord", LOG_CONS, LOG_CRIT);
-            syslog(LOG_ERR, text.c_str());
+            syslog(LOG_ERR, "%s", text.c_str());
             closelog();
             return;
         // stdout
