@@ -1,5 +1,19 @@
 import os
 env=Environment(LIBS = ['pthread'])
+
+
+def CheckPKGConfig(context, version):
+     context.Message( 'Checking for pkg-config... ' )
+     ret = context.TryAction('pkg-config --atleast-pkgconfig-version=%s' % version)[0]
+     context.Result( ret )
+     return ret
+
+def CheckPKG(context, name):
+     context.Message( 'Checking for %s... ' % name )
+     ret = context.TryAction('pkg-config --exists \'%s\'' % name)[0]
+     context.Result( ret )
+     return ret
+
 if 'CPPFLAGS' in os.environ:
     env.Append(CPPFLAGS = os.environ['CPPFLAGS'])
 
@@ -13,7 +27,22 @@ if 'LDFLAGS' in os.environ:
     env.Append(LINKFLAGS = os.environ['LDFLAGS'])
 
 env.Append(CXXFLAGS = ["--std=c++0x"])
-env.ParseConfig('pkg-config --cflags --libs libprocps')
+
+if not env.GetOption('clean'):
+    conf = Configure(env, custom_tests = { 'CheckPKGConfig' : CheckPKGConfig,
+                                           'CheckPKG' : CheckPKG })
+
+    if not conf.CheckPKGConfig('0.22'):
+         print 'pkg-config >= 0.22 not found.'
+         Exit(1)
+
+    if conf.CheckPKG('libprocps >= 3.3.6'):
+        conf.env.ParseConfig('pkg-config --cflags --libs libprocps')
+    elif not conf.CheckLibWithHeader('procps', 'proc/readproc.h', 'C'):
+        print 'neither libprocps >= 3.3.6 or proc was found'
+        Exit(1)
+
+    env = conf.Finish()
 
 terminatord = env.Program('terminatord', ['main.cpp', Glob('src/*.cpp')])
 env.Install('/usr/bin', terminatord)
