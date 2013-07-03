@@ -35,6 +35,7 @@ class ProcessManager
         static void WarnExcess();
         static void KillExcess();
         static void KillProc(pid_t pd, bool hard);
+        unsigned int void KillExec(proc_t* proc);
     protected:
         static void Exec(proc_t* proc);
     private:

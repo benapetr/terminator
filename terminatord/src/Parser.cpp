@@ -43,6 +43,8 @@ void Parser::ShowHelp()
     cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused> <memoryfree>" << endl;
     cout << " --syslog: write to syslog" << endl;
     cout << " --noprotectoom: doesn't protect self against the kernel oom killer" << endl;
+    cout << " --testexec: Run a command before kill of process with parameters: <pid> <cmd> <userid> <memoryused> <memory free>" << endl;
+    cout << "             if this command return non zero, the process will not be killed" << endl;
     cout << " --ignoreswap: will not count swap to free memory (will kill processes even if there is space in swap)" << endl;
     cout << " --log file: write to a file" << endl;
     cout << " -d: Run in a daemon mode" << endl;
@@ -273,6 +275,18 @@ bool Parser::Parse()
         if (parameter == "--noprotectoom")
         {
             Configuration::ProtectSelf = false;
+            continue;
+        }
+        if (parameter == "--testexec")
+        {
+            if (argc <= curr)
+            {
+                Core::ErrorLog("You need to provide a path to binary");
+                return true;
+            }
+            Configuration::KillEP = argv[curr];
+            curr++;
+            Configuration::KillExec = true;
             continue;
         }
         if (parameter.size() > 1 && parameter.substr(0, 1) == "-")

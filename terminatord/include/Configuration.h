@@ -32,9 +32,11 @@ class Configuration
         static int Interval;
         static bool KillSelf;
         static bool ProtectSelf;
+        static bool KillExec;
         static unsigned int HardSystemLimitMB;
         static unsigned int SoftSystemLimitMB;
         static unsigned long MemoryTotal;
+        static string KillEP;
         static bool DryMode;
         static pid_t pid;
         static int Ignore[800];

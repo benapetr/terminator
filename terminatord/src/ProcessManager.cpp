@@ -54,6 +54,26 @@ void ProcessManager::Exec(proc_t* proc)
     }
 }
 
+unsigned int ProcessManager::KillExec(proc_t* proc)
+{
+    if (Configuration::KillExec)
+    {
+        Core::DebugLog("Executing " + Configuration::KillEP, 2);
+        string command = Configuration::KillEP + " " +
+                            Core::int2String(proc->tid) +
+                            " " + proc->cmd +
+                            " " + Core::int2String(proc->euid) +
+                            " " + Core::Long2String(proc->resident * 4) +
+                            " " + Core::Long2String(Watcher::GetFree());
+        if system(command.c_str())
+        {
+            return 0;
+        }
+        return 2;
+    }
+    return 0;
+}
+
 bool ProcessManager::IgnoredId(long user)
 {
     int curr = 0;
@@ -128,8 +148,16 @@ void ProcessManager::KillExcess()
         {
             Core::Log("Exceeded soft limit - process " + Name(proc_info) + " killing now");
 
-            KillProc((pid_t)proc_info->tid, false);
-            Exec(proc_info);
+            if (KillExec(proc_info) == 0)
+            {
+                KillProc((pid_t)proc_info->tid, false);
+                Exec(proc_info);
+            }else
+            {
+                Core::Log("Not killed " + Name(proc_info) + " because the test command returned different value");
+            }
+
+
         } else
         {
             if (Configuration::Verbosity > 12)
@@ -304,8 +332,14 @@ void ProcessManager::KillHighest(bool hard)
 
     Core::Log("Most preferred process has score " + Core::int2String(current_score) + " : " + Name(&highest) +  " killing now");
 
-    Exec(&highest);
-    KillProc((pid_t)highest.tid, hard);
+    if (KillExec(&highest) == 0)
+    {
+        KillProc((pid_t)highest.tid, hard);
+        Exec(&highest);
+    }else
+    {
+        Core::Log("Not killed " + Name(&highest) + " because the test command returned different value");
+    }
 
     closeproc(proc);
     return;
