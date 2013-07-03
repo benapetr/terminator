@@ -65,7 +65,7 @@ unsigned int ProcessManager::KillExec(proc_t* proc)
                             " " + Core::int2String(proc->euid) +
                             " " + Core::Long2String(proc->resident * 4) +
                             " " + Core::Long2String(Watcher::GetFree());
-        if system(command.c_str())
+        if (system(command.c_str()))
         {
             return 0;
         }
