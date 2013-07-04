@@ -38,7 +38,7 @@ if not env.GetOption('clean'):
 
     if conf.CheckPKG('libprocps >= 3.3.6'):
         conf.env.ParseConfig('pkg-config --cflags --libs libprocps')
-    elif not conf.CheckLibWithHeader('procps', 'proc/readproc.h', 'C'):
+    elif not conf.CheckLibWithHeader('libproc', 'proc/readproc.h', 'C'):
         print 'neither libprocps >= 3.3.6 or proc was found'
         Exit(1)
 
