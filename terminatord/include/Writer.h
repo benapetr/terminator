@@ -9,14 +9,11 @@
  // GNU General Public License for more details.
 
 
-
-
 #ifndef WRITER_H
 #define WRITER_H
 
 #include <iostream>
 #include <list>
-#include <unistd.h>
 #include <fstream>
 #include <list>
 #include <mutex>

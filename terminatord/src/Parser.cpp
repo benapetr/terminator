@@ -8,12 +8,14 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
-#include <cstdlib>
 #include "../include/Configuration.h"
 #include "../include/Writer.h"
 #include "../include/Parser.h"
 #include "../include/Core.h"
 
+//! Constructor
+//! @param c count of params
+//! @param v list of items
 Parser::Parser(int c, char *v[])
 {
     argc = c;

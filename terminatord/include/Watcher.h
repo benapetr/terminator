@@ -11,13 +11,11 @@
 #ifndef WATCHER_H
 #define WATCHER_H
 
-#include <unistd.h>
 #include <limits>
 #include <sys/sysinfo.h>
 #include <fstream>
 #include <proc/readproc.h>
 #include <proc/sysinfo.h>
-#include <sys/resource.h>
 #include <signal.h>
 
 using namespace std;

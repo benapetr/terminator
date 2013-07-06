@@ -9,8 +9,6 @@
  // GNU General Public License for more details.
 
 #include <iostream>
-#include <string.h>
-#include <stdio.h>
 #include <proc/readproc.h>
 #include "include/Configuration.h"
 #include "include/Parser.h"

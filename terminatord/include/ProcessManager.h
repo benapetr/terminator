@@ -11,18 +11,11 @@
 #ifndef PROCESSMANAGER_H
 #define PROCESSMANAGER_H
 
-#include <cstdlib>
 #include <errno.h>
 #include <iostream>
-#include <stdarg.h>
-#include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
 #include <signal.h>
-#include <string.h>
-#include <stdio.h>
 #include <proc/readproc.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 
 using namespace std;
