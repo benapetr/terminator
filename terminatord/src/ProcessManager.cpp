@@ -156,8 +156,6 @@ void ProcessManager::KillExcess()
             {
                 Core::Log("Not killed " + Name(proc_info) + " because the test command returned different value");
             }
-
-
         } else
         {
             if (Configuration::Verbosity > 12)
@@ -296,10 +294,7 @@ void ProcessManager::KillHighest(bool hard)
             continue;
         }
 
-        if (badness_score != 0)
-        {
-            score = score + badness_score;
-        }
+        score = score + badness_score;
 
         // check if this process is using most memory
         if ( proc_info->resident * 4 > current_highest )
