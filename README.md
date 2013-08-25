@@ -27,6 +27,7 @@ start killing processes when system is reaching OOM.
 Build
 ======
 You can compile this application just by running
+    cd terminatord
     make
 
 If you are using ubuntu or debian you can execute script ./debian to make .deb package
@@ -76,8 +77,6 @@ Program is configured using parameters, there is no configuration file, but you 
  -d: Run in a daemon mode, this is currently only supported mode and you always need to pass it in order to start
 
  -v [--verbose]: Increase verbosity
-
-
 
 
 
