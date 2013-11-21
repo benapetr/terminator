@@ -17,6 +17,9 @@
 #include <signal.h>
 #include <proc/readproc.h>
 #include <sys/stat.h>
+#include "../include/Core.h"
+#include "../include/Watcher.h"
+#include "../include/Configuration.h"
 
 using namespace std;
 

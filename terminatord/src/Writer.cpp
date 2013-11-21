@@ -10,11 +10,19 @@
 
 // this file writes logs to file
 
-#include "../include/Configuration.h"
-#include "../include/Core.h"
 #include "../include/Writer.h"
-#include "../include/Item.h"
 
+//! Database of objects that writer needs to write
+std::list<Item> Writer::DB;
+//! Whether writer is running
+bool Writer::isRunning = true;
+pthread_t Writer::thread;
+
+std::mutex &Writer::data_mut()
+{
+    static std::mutex m;
+    return m;
+}
 
 //! This function is exec of thread of writer
 void *Writer::Exec(void *threadid)
@@ -105,8 +113,3 @@ void Writer::Write(string file, string text)
     DB.push_back(Item(file,text));
 }
 
-//! Database of objects that writer needs to write
-std::list<Item> Writer::DB;
-//! Whether writer is running
-bool Writer::isRunning = true;
-pthread_t Writer::thread;

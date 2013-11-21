@@ -14,6 +14,10 @@
 #include <sstream>
 #include <syslog.h>
 #include <iostream>
+#include "Item.h"
+#include "Writer.h"
+#include "Parser.h"
+#include "Configuration.h"
 
 using namespace std;
 

@@ -8,10 +8,7 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
-#include "../include/Core.h"
 #include "../include/ProcessManager.h"
-#include "../include/Watcher.h"
-#include "../include/Configuration.h"
 
 void ProcessManager::KillProc(pid_t pd, bool hard)
 {

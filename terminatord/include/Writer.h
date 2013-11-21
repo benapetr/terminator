@@ -19,6 +19,8 @@
 #include <mutex>
 #include <pthread.h>
 #include "Item.h"
+#include "Configuration.h"
+#include "Core.h"
 
 using namespace std;
 
@@ -28,17 +30,12 @@ class Writer
         static void Write(string file, string text);
         static void Load();
         static void Terminate();
-    protected:
     private:
         static void *Exec(void *threadid);
         static list<Item> DB;
         static pthread_t thread;
         static bool isRunning;
-        static std::mutex &data_mut()
-        {
-            static std::mutex m;
-            return m;
-        }
+        static std::mutex &data_mut();
 };
 
 #endif // WRITER_H

@@ -8,10 +8,6 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
-#include "../include/Item.h"
-#include "../include/Writer.h"
-#include "../include/Parser.h"
-#include "../include/Configuration.h"
 #include "../include/Core.h"
 
 //! Convert a number to 00 format

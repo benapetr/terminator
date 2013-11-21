@@ -8,10 +8,7 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
-#include "../include/Configuration.h"
-#include "../include/Writer.h"
 #include "../include/Parser.h"
-#include "../include/Core.h"
 
 //! Constructor
 //! @param c count of params

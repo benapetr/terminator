@@ -17,6 +17,9 @@
 #include <proc/readproc.h>
 #include <proc/sysinfo.h>
 #include <signal.h>
+#include "ProcessManager.h"
+#include "Core.h"
+#include "Configuration.h"
 
 using namespace std;
 

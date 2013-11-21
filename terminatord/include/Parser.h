@@ -13,6 +13,9 @@
 
 #include <fstream>
 #include <iostream>
+#include "Configuration.h"
+#include "Writer.h"
+#include "Core.h"
 
 using namespace std;
 

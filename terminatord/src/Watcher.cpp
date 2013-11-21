@@ -8,9 +8,6 @@
  // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  // GNU General Public License for more details.
 
-#include "../include/ProcessManager.h"
-#include "../include/Core.h"
-#include "../include/Configuration.h"
 #include "../include/Watcher.h"
 
 //! Return if watcher is running, changing this to false terminate it
