@@ -23,19 +23,22 @@
 
 using namespace std;
 
-class ProcessManager
+namespace terminator
 {
-    public:
-        static void KillHighest(bool hard);
-        static string Name(proc_t *task);
-        static void WarnExcess();
-        static void KillExcess();
-        static void KillProc(pid_t pd, bool hard);
-        static unsigned int KillExec(proc_t* proc);
-    protected:
-        static void Exec(proc_t* proc);
-    private:
-        static bool IgnoredId(long user);
-};
+    class ProcessManager
+    {
+        public:
+            static void KillHighest(bool hard);
+            static string Name(proc_t *task);
+            static void WarnExcess();
+            static void KillExcess();
+            static void KillProc(pid_t pd, bool hard);
+            static unsigned int KillExec(proc_t* proc);
+        protected:
+            static void Exec(proc_t* proc);
+        private:
+            static bool IgnoredId(long user);
+    };
+}
 
 #endif // PROCESSMANAGER_H

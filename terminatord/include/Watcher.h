@@ -23,18 +23,21 @@
 
 using namespace std;
 
-class Watcher
+namespace terminator
 {
-    public:
-        static void Start();
-        static bool Running;
-        static unsigned long GetMemTotal();
-        static unsigned long GetFree();
-        static bool ProtectSelf();
-    protected:
-    private:
-        static void CheckSystemLimit();
-        static void CheckUserLimit();
-};
+    class Watcher
+    {
+        public:
+            static void Start();
+            static bool Running;
+            static unsigned long GetMemTotal();
+            static unsigned long GetFree();
+            static bool ProtectSelf();
+        protected:
+        private:
+            static void CheckSystemLimit();
+            static void CheckUserLimit();
+    };
+}
 
 #endif // WATCHER_H

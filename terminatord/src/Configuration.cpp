@@ -10,6 +10,8 @@
 
 #include "../include/Configuration.h"
 
+using namespace terminator;
+
 //! Version
 string Configuration::Version = "1.0.4.0";
 
@@ -62,7 +64,7 @@ bool Configuration::KillRoot = false;
 string Configuration::LF = "/var/log/terminator.log";
 
 //! Type of log 0 - syslog 1 - stdout 2 - file
-int Configuration::Logger = 1;
+LoggingSystem Configuration::Logger = terminator::Stdout;
 
 //! Pid of current process
 pid_t Configuration::pid = getpid();
@@ -78,6 +80,9 @@ unsigned long Configuration::MemoryTotal = 0;
 
 //! Dry mode
 bool Configuration::DryMode = false;
+
+bool Configuration::WritePid = false;
+string Configuration::PidFile = "";
 
 //! Interval between checks
 int Configuration::Interval = 600000;

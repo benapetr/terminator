@@ -10,6 +10,8 @@
 
 #include "../include/Parser.h"
 
+using namespace terminator;
+
 //! Constructor
 //! @param c count of params
 //! @param v list of items
@@ -198,12 +200,12 @@ bool Parser::Parse()
             }
             Configuration::LF = argv[curr];
             curr++;
-            Configuration::Logger = 2;
+            Configuration::Logger = terminator::File;
             continue;
         }
         if (parameter == "--syslog")
         {
-            Configuration::Logger = 0;
+            Configuration::Logger = terminator::Syslog;
             continue;
         }
         if (parameter == "--ignore")
@@ -251,23 +253,8 @@ bool Parser::Parse()
                 Core::ErrorLog("You need to provide a path to file");
                 return true;
             }
-            string fl = argv[curr];
-            try
-            {
-                fstream filestr;
-                filestr.open (argv[curr], fstream::in | fstream::out | fstream::trunc);
-                if (filestr.rdstate() & std::ifstream::failbit)
-                {
-                    Core::ErrorLog("Error openning " + fl);
-                    return true;
-                }
-                filestr << Configuration::pid <<endl;
-                filestr.close();
-            } catch (exception code)
-            {
-                Core::ErrorLog("Unable to write to " + fl + " error: " + code.what());
-                return true;
-            }
+            Configuration::WritePid = true;
+            Configuration::PidFile = argv[curr];
             curr++;
             continue;
         }

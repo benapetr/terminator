@@ -10,6 +10,8 @@
 
 #include "../include/Core.h"
 
+using namespace terminator;
+
 //! Convert a number to 00 format
 //! @param n Number
 string Core::DecimalNumber(int n)
@@ -71,6 +73,30 @@ string Core::int2String(int number)
     return s.str();
 }
 
+bool Core::WritePid()
+{
+    if (Configuration::WritePid)
+    {
+        try
+        {
+            fstream filestr;
+            filestr.open (Configuration::PidFile, fstream::in | fstream::out | fstream::trunc);
+            if (filestr.rdstate() & std::ifstream::failbit)
+            {
+                Core::ErrorLog("Error openning " + Configuration::PidFile);
+                return false;
+            }
+            filestr << Configuration::pid <<endl;
+            filestr.close();
+        } catch (exception code)
+        {
+            Core::ErrorLog("Unable to write to " + Configuration::PidFile + " error: " + code.what());
+            return false;
+        }
+    }
+    return true;
+}
+
 //! Log
 //! @param text Text to log
 void Core::Log(string text)
@@ -78,16 +104,16 @@ void Core::Log(string text)
     switch (Configuration::Logger)
     {
         // syslog
-        case 0:
+        case terminator::Syslog:
             openlog("terminatord", LOG_CONS, LOG_CRIT);
             syslog(LOG_INFO, "%s", text.c_str());
             closelog();
             return;
         // stdout
-        case 1:
+        case terminator::Stdout:
             cout << "[" << GetCurrentTime() << "] " << text << endl;
             return;
-        case 2:
+        case terminator::File:
             Writer::Write(Configuration::LF, "[" + GetCurrentTime() + "] " + text);
             return;
     }
@@ -97,19 +123,19 @@ void Core::Log(string text)
 //! @param text Text to log
 void Core::ErrorLog(string text)
 {
-switch (Configuration::Logger)
+    switch (Configuration::Logger)
     {
         // syslog
-        case 0:
+        case terminator::Syslog:
             openlog("terminatord", LOG_CONS, LOG_CRIT);
             syslog(LOG_ERR, "%s", text.c_str());
             closelog();
             return;
         // stdout
-        case 1:
+        case terminator::Stdout:
             cerr << "[" << GetCurrentTime() << "] ERROR: " << text << endl;
             return;
-        case 2:
+        case terminator::File:
             Writer::Write(Configuration::LF, "[" + GetCurrentTime() + "] ERROR: " + text);
             return;
     }

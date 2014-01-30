@@ -24,18 +24,21 @@
 
 using namespace std;
 
-class Writer
+namespace terminator
 {
-    public:
-        static void Write(string file, string text);
-        static void Load();
-        static void Terminate();
-    private:
-        static void *Exec(void *threadid);
-        static list<Item> DB;
-        static pthread_t thread;
-        static bool isRunning;
-        static std::mutex &data_mut();
-};
+    class Writer
+    {
+        public:
+            static void Write(string file, string text);
+            static void Load();
+            static void Terminate();
+        private:
+            static void *Exec(void *threadid);
+            static list<Item> DB;
+            static pthread_t thread;
+            static bool isRunning;
+            static std::mutex &data_mut();
+    };
+}
 
 #endif // WRITER_H

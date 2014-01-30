@@ -10,6 +10,8 @@
 
 #include "../include/Item.h"
 
+using namespace terminator;
+
 //! Constructor
 Item::Item(string file, string text)
 {

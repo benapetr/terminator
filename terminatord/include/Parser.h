@@ -19,18 +19,21 @@
 
 using namespace std;
 
-class Parser
+namespace terminator
 {
-    public:
-        Parser(int c, char *v[]);
-        bool Parse();
-        static bool is_number(const std::string& s);
-    protected:
-    private:
-        int argc;
-        char **argv;
-        void ShowHelp();
-        bool NextIsNumber(int next);
-};
+    class Parser
+    {
+        public:
+            Parser(int c, char *v[]);
+            bool Parse();
+            static bool is_number(const std::string& s);
+        protected:
+        private:
+            int argc;
+            char **argv;
+            void ShowHelp();
+            bool NextIsNumber(int next);
+    };
+}
 
 #endif // PARSER_H

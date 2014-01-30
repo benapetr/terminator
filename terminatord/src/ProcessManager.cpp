@@ -10,6 +10,8 @@
 
 #include "../include/ProcessManager.h"
 
+using namespace terminator;
+
 void ProcessManager::KillProc(pid_t pd, bool hard)
 {
     if (Configuration::DryMode)

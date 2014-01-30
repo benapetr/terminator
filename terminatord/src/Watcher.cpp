@@ -10,6 +10,8 @@
 
 #include "../include/Watcher.h"
 
+using namespace terminator;
+
 //! Return if watcher is running, changing this to false terminate it
 bool Watcher::Running = false;
 

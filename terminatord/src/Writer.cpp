@@ -12,6 +12,8 @@
 
 #include "../include/Writer.h"
 
+using namespace terminator;
+
 //! Database of objects that writer needs to write
 std::list<Item> Writer::DB;
 //! Whether writer is running

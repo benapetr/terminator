@@ -16,36 +16,66 @@
 
 using namespace std;
 
-class Configuration
+namespace terminator
 {
-    public:
-        static string Version;
-        static unsigned int Verbosity;
-        static bool ReportOOM;
-        static bool KillOOM;
-        static unsigned int HardMemoryLimitMB;
-        static unsigned int SoftMemoryLimitMB;
-        static bool Daemon;
-        static string LF;
-        static int Logger;
-        static bool KillRoot;
-        static int Interval;
-        static bool KillSelf;
-        static bool ProtectSelf;
-        static bool KillExec;
-        static unsigned int HardSystemLimitMB;
-        static unsigned int SoftSystemLimitMB;
-        static unsigned long MemoryTotal;
-        static string KillEP;
-        static bool DryMode;
-        static pid_t pid;
-        static int Ignore[800];
-        static int IgnoreCount;
-        static bool Exec;
-        static bool Swap;
-        static string ExecPath;
-    protected:
-    private:
-};
+    enum LoggingSystem
+    {
+        Syslog,
+        Stdout,
+        File
+    };
+
+    class Configuration
+    {
+        public:
+            //! Version
+            static string Version;
+            //! Verbosity
+            static unsigned int Verbosity;
+            //! Whether processes should be reported when they exceed certain memory limit
+            static bool ReportOOM;
+            //! Whether processes should be killed when they exceed certain memory limit
+            static bool KillOOM;
+            //! Value that specifies when processes needs to be killed
+            static unsigned int HardMemoryLimitMB;
+            //! Value that specifies when processes needs to be killed
+            static unsigned int SoftMemoryLimitMB;
+            //! Running as background process
+            static bool Daemon;
+            static string LF;
+            //! Type of log subsystem to use by daemon
+            static LoggingSystem Logger;
+            static bool KillRoot;
+            static int Interval;
+            //! Kill itself when best candidate
+            static bool KillSelf;
+            //! Protect against kernel OOM killer
+            static bool ProtectSelf;
+            //! Execute this before kill of process
+            static bool KillExec;
+            //! Value that specifies when processes needs to be killed
+            static unsigned int HardSystemLimitMB;
+            //! Value that specifies when processes needs to be killed
+            static unsigned int SoftSystemLimitMB;
+            static unsigned long MemoryTotal;
+            //! Path to program to launch before process is killed
+            static string KillEP;
+            static bool DryMode;
+            //! Pid of current process
+            static pid_t pid;
+            //! List of uid to ignore
+            static int Ignore[800];
+            //! Number of items in ignore list
+            static int IgnoreCount;
+            static bool WritePid;
+            static string PidFile;
+            //! Start a program after process is killed
+            static bool Exec;
+            //! Whether swap should be considered as free memory too
+            static bool Swap;
+            //! Path to program to launch when process is killed
+            static string ExecPath;
+    };
+}
 
 #endif // CONFIGURATION_H

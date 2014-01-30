@@ -17,6 +17,7 @@
 #include "include/Watcher.h"
 
 using namespace std;
+using namespace terminator;
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
         return 0;
     }
     delete parser;
-    if (Configuration::Logger == 2)
+    if (Configuration::Logger == terminator::File)
     {
         Writer::Load();
     }
@@ -35,6 +36,30 @@ int main(int argc, char *argv[])
         Core::ErrorLog("Nothing to do");
         return 2;
     }
+    // Daemonize self
+    /* Fork off the parent process */
+    pid_t pid = fork();
+
+    if (pid < 0)
+    {
+        Core::DebugLog("Parent: forked to pid: " + Core::int2String(pid));
+        Core::ErrorLog("Failed to daemonize itself call to fork() failed with " + Core::int2String(errno));
+        return 60;
+    }
+
+    if (pid > 0)
+    {
+        Core::DebugLog("Parent: forked to pid: " + Core::int2String(pid));
+        return 0;
+    }
+
+    // patch that adjust the forked pid
+    Configuration::pid = getpid();
+    Core::DebugLog("Forked daemon: adjusted pid to " + Core::int2String(Configuration::pid));
+
+    // write a pid to a file
+    Core::WritePid();
+
     Core::Log("Terminatord v" + Configuration::Version);
     Core::DebugLog("Loading configuration");
     Configuration::MemoryTotal = Watcher::GetMemTotal();
