@@ -25,20 +25,23 @@ using namespace std;
 
 namespace terminator
 {
-    class ProcessManager
+    class BufferItem
     {
-        public:
-            static void KillHighest(bool hard);
-            static string Name(proc_t *task);
-            static void WarnExcess();
-            static void KillExcess();
-            static void KillProc(pid_t pd, bool hard);
-            static unsigned int KillExec(proc_t* proc);
-        protected:
-            static void Exec(proc_t* proc);
-        private:
-            static bool IgnoredId(long user);
+        int Pid;
+        time_t Time;
     };
+
+    namespace ProcessManager
+    {
+        void KillHighest(bool hard);
+        string Name(proc_t *task);
+        void WarnExcess();
+        void KillExcess();
+        void KillProc(pid_t pd, bool hard);
+        unsigned int KillExec(proc_t* proc);
+        void Exec(proc_t* proc);
+        bool IgnoredId(long user);
+    }
 }
 
 #endif // PROCESSMANAGER_H

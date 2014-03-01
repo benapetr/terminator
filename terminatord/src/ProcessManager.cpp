@@ -49,7 +49,10 @@ void ProcessManager::Exec(proc_t* proc)
                             " " + Core::int2String(proc->euid) +
                             " " + Core::Long2String(proc->resident * 4) +
                             " " + Core::Long2String(Watcher::GetFree());
-        system(command.c_str());
+        if (!system(command.c_str()))
+        {
+            Core::DebugLog("Failed to execute " + command);
+        }
     }
 }
 
@@ -58,10 +61,8 @@ unsigned int ProcessManager::KillExec(proc_t* proc)
     if (Configuration::KillExec)
     {
         Core::DebugLog("Executing " + Configuration::KillEP, 2);
-        string command = Configuration::KillEP + " " +
-                            Core::int2String(proc->tid) +
-                            " " + proc->cmd +
-                            " " + Core::int2String(proc->euid) +
+        string command = Configuration::KillEP + " " + Core::int2String(proc->tid) +
+                            " " + proc->cmd + " " + Core::int2String(proc->euid) +
                             " " + Core::Long2String(proc->resident * 4) +
                             " " + Core::Long2String(Watcher::GetFree());
         if (system(command.c_str()))
