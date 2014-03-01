@@ -13,7 +13,7 @@
 using namespace terminator;
 
 //! Version
-string Configuration::Version = "1.0.4.0";
+string Configuration::Version = "1.0.6.0";
 
 //! Verbosity
 unsigned int Configuration::Verbosity = 0;

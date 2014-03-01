@@ -1,3 +1,8 @@
+terminatord (1.0.6.0) stable; urgency=low
+
+  * Buffer
+
+ -- Petr Bena <benapetr@gmail.com>  Sat, 01 Mar 2014 17:30:12 +0200
 terminatord (1.0.4.0) stable; urgency=low
 
   * Code cleanup
