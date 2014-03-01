@@ -50,7 +50,6 @@ namespace terminator
         bool IgnoredId(long user);
         void ClearKilled();
         BufferItem *IsKilled(pid_t pid);
-        list<BufferItem*> *Buffer;
     }
 }
 
