@@ -13,7 +13,6 @@
 #define WRITER_H
 
 #include <iostream>
-#include <list>
 #include <fstream>
 #include <list>
 #include <mutex>

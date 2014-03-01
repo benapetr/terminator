@@ -41,10 +41,10 @@ void Parser::ShowHelp()
     cout << " --interval number: Set an interval between checks in microseconds" << endl;
     cout << " --quiet: Don't report processes that exceed the limits" << endl;
     cout << " --pid file: Write a pid to given file" << endl;
-    cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused in kilo-bytes> <memoryfree in bytes>" << endl;
+    cout << " --exec file: Execute a given file on kill with parameters: <pid> <cmd> <userid> <memoryused in KB> <memoryfree in bytes>" << endl;
     cout << " --syslog: write to syslog" << endl;
     cout << " --noprotectoom: doesn't protect self against the kernel oom killer" << endl;
-    cout << " --testexec: Run a command before kill of process with parameters: <pid> <cmd> <userid> <memoryused in kilo-bytes> <memory free in bytes>" << endl;
+    cout << " --testexec: Run a command before kill of process with parameters: <pid> <cmd> <userid> <memoryused in KB> <memory free in bytes>" << endl;
     cout << "             if this command return non zero, the process will not be killed" << endl;
     cout << " --ignoreswap: will not count swap to free memory (will kill processes even if there is space in swap)" << endl;
     cout << " --log file: write to a file" << endl;

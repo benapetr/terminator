@@ -12,6 +12,20 @@
 
 using namespace terminator;
 
+list<BufferItem*> *Buffer = new list<BufferItem*>();
+
+BufferItem::BufferItem(BufferItem *b)
+{
+    this->Pid = b->Pid;
+    this->Time = b->Time;
+}
+
+BufferItem::BufferItem(int pid)
+{
+    this->Pid = pid;
+    this->Time = time(NULL);
+}
+
 void ProcessManager::KillProc(pid_t pd, bool hard)
 {
     if (Configuration::DryMode)
@@ -53,6 +67,8 @@ void ProcessManager::Exec(proc_t* proc)
         {
             Core::DebugLog("Failed to execute " + command);
         }
+        // write the pid to cache of killed processes
+        Buffer->push_back(new BufferItem((pid_t)proc->tid));
     }
 }
 
@@ -100,10 +116,12 @@ string ProcessManager::Name(proc_t * task)
 //! Kill processes that are exceeding the limits
 void ProcessManager::KillExcess()
 {
-    PROCTAB* proc = openproc(PROC_FILLARG | PROC_FILLSTAT | PROC_FILLMEM);
-
+    // first we need to clear out the processes that we killed and in past and we don't know yet if they
+    // were already killed
+    ClearKilled();
+    // Now we can retrieve a fresh list of running processes
+    PROCTAB *proc = openproc(PROC_FILLARG | PROC_FILLSTAT | PROC_FILLMEM);
     Core::DebugLog("Looking for processes that exceed the hard or soft limit", 10);
-
     proc_t *proc_info;
 
     while (true)
@@ -113,6 +131,7 @@ void ProcessManager::KillExcess()
         {
             break;
         }
+        BufferItem *killed = IsKilled((pid_t)proc_info->tid);
         if (proc_info->tid == Configuration::pid && !Configuration::KillSelf)
         {
             Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 8);
@@ -143,7 +162,10 @@ void ProcessManager::KillExcess()
             Core::Log("Exceeded hard limit - process " + Name(proc_info) + " killing now");
 
             KillProc((pid_t)proc_info->tid, true);
-            Exec(proc_info);
+            if (!killed)
+            {
+                Exec(proc_info);
+            }
         } else if ( proc_info->resident * 4 > ((long)Configuration::SoftMemoryLimitMB * 1024 ))
         {
             Core::Log("Exceeded soft limit - process " + Name(proc_info) + " killing now");
@@ -151,7 +173,10 @@ void ProcessManager::KillExcess()
             if (KillExec(proc_info) == 0)
             {
                 KillProc((pid_t)proc_info->tid, false);
-                Exec(proc_info);
+                if (!killed)
+                {
+                    Exec(proc_info);
+                }
             }else
             {
                 Core::Log("Not killed " + Name(proc_info) + " because the test command returned different value");
@@ -174,7 +199,6 @@ void ProcessManager::WarnExcess()
 {
     PROCTAB* proc = openproc(PROC_FILLARG | PROC_FILLSTAT | PROC_FILLMEM);
     proc_t * proc_info;
-
     Core::DebugLog("Looking for processes that exceed the hard or soft limit", 10);
 
     while (true)
@@ -338,4 +362,51 @@ void ProcessManager::KillHighest(bool hard)
 
     closeproc(proc);
     return;
+}
+
+void ProcessManager::ClearKilled()
+{
+    // now we need to remove all killed processes from buffer if they are already dead
+    if (Buffer->size() == 0)
+    {
+        // we don't need to do anything if list of killed processes is empty
+        return;
+    }
+    list<BufferItem*> buffer_;
+    PROCTAB *proc = openproc(PROC_FILLARG | PROC_FILLSTAT | PROC_FILLMEM);
+    proc_t *proc_info;
+    while (true)
+    {
+        proc_info = readproc(proc, NULL);
+        if (proc_info == NULL)
+        {
+            break;
+        }
+        BufferItem *killed = IsKilled((pid_t)proc_info->tid);
+        if (killed)
+        {
+            buffer_.push_back(new BufferItem(killed));
+        }
+        freeproc(proc_info);
+    }
+    list<BufferItem*>::iterator iter;
+    for(iter = Buffer->begin(); iter != Buffer->end(); iter++)
+    {
+        delete *iter;
+    }
+    delete Buffer;
+    Buffer = new list<BufferItem*>(buffer_);
+}
+
+BufferItem *ProcessManager::IsKilled(pid_t pid)
+{
+    list<BufferItem*>::iterator iter;
+    for(iter = Buffer->begin(); iter != Buffer->end(); iter++)
+    {
+        if ((*iter)->Pid == pid)
+        {
+            return *iter;
+        }
+    }
+    return NULL;
 }

@@ -14,7 +14,9 @@
 #include <errno.h>
 #include <iostream>
 #include <unistd.h>
+#include <time.h>
 #include <signal.h>
+#include <list>
 #include <proc/readproc.h>
 #include <sys/stat.h>
 #include "../include/Core.h"
@@ -25,10 +27,15 @@ using namespace std;
 
 namespace terminator
 {
+    //! When a process is killed it may need some time for it to take effect, in order to prevent
+    //! killing it repeatedly in a loop, we store it into a cache using this
     class BufferItem
     {
-        int Pid;
-        time_t Time;
+        public:
+            BufferItem(pid_t pid);
+            BufferItem(BufferItem *b);
+            pid_t Pid;
+            time_t Time;
     };
 
     namespace ProcessManager
@@ -41,6 +48,9 @@ namespace terminator
         unsigned int KillExec(proc_t* proc);
         void Exec(proc_t* proc);
         bool IgnoredId(long user);
+        void ClearKilled();
+        BufferItem *IsKilled(pid_t pid);
+        list<BufferItem*> *Buffer;
     }
 }
 

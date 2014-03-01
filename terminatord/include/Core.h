@@ -21,8 +21,10 @@
 
 using namespace std;
 
+//! This namespace includes all the items and functions related to terminator daemon
 namespace terminator
 {
+    //! This is rather a namespace for all common functions needed for daemon
     class Core
     {
         public:
@@ -33,7 +35,6 @@ namespace terminator
             static string Long2String(unsigned long number);
             static int GetOom(pid_t pid);
             static bool WritePid();
-        protected:
         private:
             static string GetCurrentTime();
             static string DecimalNumber(int n);

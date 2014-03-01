@@ -79,6 +79,7 @@ void Writer::Terminate()
         if (Writer::DB.size() > 0)
         {
             Core::DebugLog("There are still data in memory, waiting for writer to finish");
+            Writer::data_mut().unlock();
             sleep(2);
             continue;
         }
@@ -93,11 +94,11 @@ void Writer::Terminate()
 
 void Writer::Load()
 {
-    int r = pthread_create(&Writer::thread, NULL, Writer::Exec, (void *)1);
+    int result = pthread_create(&Writer::thread, NULL, Writer::Exec, (void *)1);
     Core::DebugLog("Initialized the writer thread");
-    if (r)
+    if (result)
     {
-        cout << "Error:unable to create thread," << r << endl;
+        cout << "Error:unable to create thread," << result << endl;
     }
 }
 
@@ -110,8 +111,10 @@ void Writer::Write(string file, string text)
         return;
     }
     // lock array
-    std::lock_guard<std::mutex> _(Writer::data_mut());
+    //std::lock_guard<std::mutex> _(Writer::data_mut());
+    Writer::data_mut().lock();
     // write this line
     DB.push_back(Item(file,text));
+    Writer::data_mut().unlock();
 }
 
