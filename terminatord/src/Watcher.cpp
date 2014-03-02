@@ -65,9 +65,11 @@ void Watcher::CheckSystemLimit()
             }
         } else
         {
+            // keep this condition here, it's performance improvement because otherwise we would need to call
+            // cpu expensive string functions even if verbosity was low
             if (Configuration::Verbosity >= 8)
             {
-                Core::Log("System is not exceeding hard limit, using " + Core::Long2String(free) + " bytes of ram");
+                Core::DebugLog("System is not exceeding hard limit, using " + Core::Long2String(free) + " bytes of ram", 8);
             }
         }
     }
@@ -83,7 +85,7 @@ void Watcher::CheckSystemLimit()
         {
             if (Configuration::Verbosity >= 8)
             {
-                Core::Log("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram");
+                Core::DebugLog("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram". 8);
             }
         }
     }
