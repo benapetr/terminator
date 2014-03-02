@@ -24,8 +24,10 @@ int main(int argc, char *argv[])
     Parser* parser = new Parser(argc, argv);
     if (parser->Parse())
     {
+        delete parser;
         return 0;
     }
+    // we no longer need the parser here so we can delete it from memory
     delete parser;
     if (Configuration::Logger == terminator::File)
     {

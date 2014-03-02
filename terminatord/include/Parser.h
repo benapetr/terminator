@@ -11,7 +11,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <fstream>
 #include <iostream>
 #include "Configuration.h"
 #include "Writer.h"
@@ -24,15 +23,14 @@ namespace terminator
     class Parser
     {
         public:
+            static bool IsNumber(const std::string& s);
             Parser(int c, char *v[]);
             bool Parse();
-            static bool is_number(const std::string& s);
-        protected:
         private:
-            int argc;
-            char **argv;
             void ShowHelp();
             bool NextIsNumber(int next);
+            int argc;
+            char **argv;
     };
 }
 

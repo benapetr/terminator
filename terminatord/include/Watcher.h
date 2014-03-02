@@ -11,12 +11,8 @@
 #ifndef WATCHER_H
 #define WATCHER_H
 
-#include <limits>
 #include <sys/sysinfo.h>
-#include <fstream>
-#include <proc/readproc.h>
 #include <proc/sysinfo.h>
-#include <signal.h>
 #include "ProcessManager.h"
 #include "Core.h"
 #include "Configuration.h"
@@ -29,10 +25,10 @@ namespace terminator
     {
         public:
             static void Start();
-            static bool Running;
             static unsigned long GetMemTotal();
             static unsigned long GetFree();
             static bool ProtectSelf();
+            static bool Running;
         protected:
         private:
             static void CheckSystemLimit();

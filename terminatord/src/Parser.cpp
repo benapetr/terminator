@@ -61,10 +61,10 @@ bool Parser::NextIsNumber(int next)
         return false;
     }
     string s = argv[next];
-    return is_number(s);
+    return IsNumber(s);
 }
 
-bool Parser::is_number(const std::string& s)
+bool Parser::IsNumber(const std::string& s)
 {
     std::string::const_iterator it = s.begin();
     while (it != s.end() && std::isdigit(*it)) ++it;
@@ -215,13 +215,13 @@ bool Parser::Parse()
             {
                 string id = list.substr(0, list.find(","));
                 list = list.substr(list.find(",") + 1);
-                if (is_number(id))
+                if (IsNumber(id))
                 {
                     Configuration::Ignore[Configuration::IgnoreCount] = atoi(id.c_str());
                     Configuration::IgnoreCount++;
                 }
             }
-            if (is_number(list))
+            if (IsNumber(list))
             {
                 Configuration::Ignore[Configuration::IgnoreCount] = atoi(list.c_str());
                 Configuration::IgnoreCount++;

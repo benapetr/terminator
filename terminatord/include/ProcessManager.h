@@ -11,12 +11,10 @@
 #ifndef PROCESSMANAGER_H
 #define PROCESSMANAGER_H
 
-#include <errno.h>
 #include <iostream>
 #include <unistd.h>
 #include <time.h>
 #include <signal.h>
-#include <list>
 #include <proc/readproc.h>
 #include <sys/stat.h>
 #include "../include/Core.h"
