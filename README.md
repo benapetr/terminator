@@ -8,8 +8,6 @@ Basically this daemon watches your system and if any process exceeds the limits,
 killed based on preferences in order to prevent your system from crashing
 
 
-
-
 Where it can be used
 =====================
 
@@ -22,7 +20,16 @@ per process) and kill them if they exceed it, and it can watch the system resour
 start killing processes when system is reaching OOM.
 
 
+Installing
+============
 
+If you are using ubuntu, you can install through ppa:
+
+   sudo add-apt-repository ppa:benapetr/misc
+   sudo apt-get update
+   sudo apt-get install terminatord
+
+Otherwise, you will need to build the package yourself
 
 Build
 ======
