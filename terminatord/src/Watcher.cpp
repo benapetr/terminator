@@ -85,7 +85,7 @@ void Watcher::CheckSystemLimit()
         {
             if (Configuration::Verbosity >= 8)
             {
-                Core::DebugLog("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram". 8);
+                Core::DebugLog("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram", 8);
             }
         }
     }
