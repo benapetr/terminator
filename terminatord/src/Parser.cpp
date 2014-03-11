@@ -275,7 +275,7 @@ bool Parser::Parse()
             Configuration::KillExec = true;
             continue;
         }
-        if (parameter.size() > 1 && parameter.substr(0, 1) == "-")
+        if (parameter.size() > 1 && parameter.substr(0, 1) == "-" && parameter.substr(0, 2) != "--")
         {
             unsigned int c = 1;
             while (c < parameter.size())

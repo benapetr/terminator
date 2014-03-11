@@ -25,9 +25,9 @@ Installing
 
 If you are using ubuntu, you can install through ppa:
 
-   sudo add-apt-repository ppa:benapetr/misc
-   sudo apt-get update
-   sudo apt-get install terminatord
+    sudo add-apt-repository ppa:benapetr/misc
+    sudo apt-get update
+    sudo apt-get install terminatord
 
 Otherwise, you will need to build the package yourself
 
@@ -36,11 +36,6 @@ Build
 You can compile this application just by running
     cd terminatord
     make
-
-If you are using ubuntu or debian you can execute script ./debian to make .deb package
-
-NOTE: You may need to switch to `Makefile_ubuntu` on older system, because default is expecting
-libprocps to exist
 
 You need to have either libprocps-dev or libproc-dev installed for it to build
 
@@ -78,6 +73,8 @@ Program is configured using parameters, there is no configuration file, but you 
 
  --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces), processes running from any of
                   these users will not be killed
+
+ --killexec <path to executable>: Will execute a command
 
  --dry: Never kill any process this is useful when you need to test your configuration
 
