@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     }
     if (!Configuration::Daemon)
     {
-        Core::ErrorLog("Nothing to do");
+        Core::ErrorLog("Nothing to do. Did you forget to use -d?");
         return 2;
     }
     // Daemonize self
