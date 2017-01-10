@@ -41,10 +41,10 @@ unsigned long Watcher::GetFree()
 //! Given that user enabled this it will check and kill processes that are exceeding system limit
 void Watcher::CheckSystemLimit()
 {
-    Core::DebugLog("Checking system limit", 2);
+    DEBUG_LOG("Checking system limit", 2);
     if (Configuration::HardSystemLimitMB == 0 && Configuration::SoftSystemLimitMB == 0)
     {
-        Core::DebugLog("Skipping system limit check, because it's set to 0", 2);
+        DEBUG_LOG("Skipping system limit check, because it's set to 0", 2);
         return;
     }
     // check hard limit
@@ -65,12 +65,7 @@ void Watcher::CheckSystemLimit()
             }
         } else
         {
-            // keep this condition here, it's performance improvement because otherwise we would need to call
-            // cpu expensive string functions even if verbosity was low
-            if (Configuration::Verbosity >= 8)
-            {
-                Core::DebugLog("System is not exceeding hard limit, using " + Core::Long2String(free) + " bytes of ram", 8);
-            }
+            DEBUG_LOG("System is not exceeding hard limit, using " + Core::Long2String(free) + " bytes of ram", 8);
         }
     }
 
@@ -83,10 +78,7 @@ void Watcher::CheckSystemLimit()
             ProcessManager::KillHighest(false);
         } else
         {
-            if (Configuration::Verbosity >= 8)
-            {
-                Core::DebugLog("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram", 8);
-            }
+            DEBUG_LOG("System is not exceeding limit, using " + Core::Long2String(free) + " bytes of ram", 8);
         }
     }
 }
@@ -94,10 +86,10 @@ void Watcher::CheckSystemLimit()
 //! Check user limits
 void Watcher::CheckUserLimit()
 {
-    Core::DebugLog("Checking processes", 2);
+    DEBUG_LOG("Checking processes", 2);
     if (Configuration::SoftMemoryLimitMB == 0 && Configuration::HardMemoryLimitMB == 0)
     {
-        Core::DebugLog("Skipping check for user processes", 2);
+        DEBUG_LOG("Skipping check for user processes", 2);
         return;
     }
     if (Configuration::KillOOM)
@@ -123,14 +115,14 @@ bool Watcher::ProtectSelf()
             filestr.open (file, fstream::in | fstream::out | fstream::trunc);
             if (filestr.rdstate() & std::ifstream::failbit)
             {
-                Core::DebugLog("Error openning " + file, 0);
+                DEBUG_LOG("Error openning " + file, 0);
                 return false;
             }
             filestr << "-17" <<endl;
             filestr.close();
         } catch (exception code)
         {
-            Core::DebugLog("Unable to write to " + file + " error: " + code.what(), 0);
+            DEBUG_LOG("Unable to write to " + file + " error: " + code.what(), 0);
         }
         return true;
     }
@@ -143,7 +135,7 @@ void Watcher::Start()
     ProtectSelf();
     while (Running)
     {
-        Core::DebugLog("Looping", 8);
+        DEBUG_LOG("Looping", 8);
         CheckSystemLimit();
         CheckUserLimit();
         // sleep for a specified value

@@ -21,6 +21,8 @@
 
 using namespace std;
 
+#define DEBUG_LOG(text, verbosity) if (terminator::Configuration::Verbosity >= verbosity) terminator::Core::DebugLog(text, verbosity)
+
 //! This namespace includes all the items and functions related to terminator daemon
 namespace terminator
 {

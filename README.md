@@ -1,8 +1,8 @@
 Terminator daemon
 ==================
 
-This is a simple c++ service which can help you keep your system clean. It serves similar purposes as
-OOM killer, but is easier to configure and not so fatal.
+This is a simple c++ resource watchdog service which can help you keep your system clean. It serves similar
+purposes as OOM killer, but is easier to configure and not so fatal.
 
 Basically this daemon watches your system and if any process exceeds the limits, it can be
 killed based on preferences in order to prevent your system from crashing
@@ -55,8 +55,7 @@ Program is configured using parameters, there is no configuration file, but you 
  -k [--kill]: Will kill processes if they exceed the limits, if this is not specified, the terminatord will only
               report the processes that exceeds the limit.
 
- --quiet:     Will completely ignore all limits for processes, terminator will only watch system memory, this is
-              useful when you need to watch system resources only.
+ --quiet: Be much less verbose.
 
  --soft limit in MB: Set a soft memory limit, any process that exceed this will get killed if --kill option
                      is provided, if not it will get reported
@@ -74,9 +73,13 @@ Program is configured using parameters, there is no configuration file, but you 
  --ignore 1,2...: Set a list of uid to ignore, separated by comma (with no spaces), processes running from any of
                   these users will not be killed
 
- --killexec <path to executable>: Will execute a command
+ --killexec <path to executable>: Will execute a command upon kill. You can use this to hook into event after process
+                                  get killed.
 
  --dry: Never kill any process this is useful when you need to test your configuration
+
+ --testexec: Run a command before kill of process with parameters: <pid> <cmd> <userid> <memoryused in KB> <memory free in bytes>
+             if this command return non zero, the process will not be killed
 
  -d: Run in a daemon mode, this is currently only supported mode and you always need to pass it in order to start
 

@@ -56,7 +56,7 @@ void ProcessManager::Exec(proc_t* proc)
 {
     if (Configuration::Exec)
     {
-        Core::DebugLog("Executing " + Configuration::ExecPath, 2);
+        DEBUG_LOG("Executing " + Configuration::ExecPath, 2);
         string command = Configuration::ExecPath + " " +
                             Core::int2String(proc->tid) +
                             " " + proc->cmd +
@@ -76,7 +76,7 @@ unsigned int ProcessManager::KillExec(proc_t* proc)
 {
     if (Configuration::KillExec)
     {
-        Core::DebugLog("Executing " + Configuration::KillEP, 2);
+        DEBUG_LOG("Executing " + Configuration::KillEP, 2);
         string command = Configuration::KillEP + " " + Core::int2String(proc->tid) +
                             " " + proc->cmd + " " + Core::int2String(proc->euid) +
                             " " + Core::Long2String(proc->resident * 4) +
@@ -134,24 +134,21 @@ void ProcessManager::KillExcess()
         BufferItem *killed = IsKilled((pid_t)proc_info->tid);
         if (proc_info->tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 8);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 8);
             freeproc(proc_info);
             continue;
         }
 
         if (!Configuration::KillRoot && (int)proc_info->euid == 0)
         {
-            if (Configuration::Verbosity >= 6)
-            {
-                Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
-            }
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
             freeproc(proc_info);
             continue;
         }
 
         if (IgnoredId(proc_info->euid))
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 3);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 3);
             freeproc(proc_info);
             continue;
         }
@@ -183,10 +180,7 @@ void ProcessManager::KillExcess()
             }
         } else
         {
-            if (Configuration::Verbosity > 12)
-            {
-                Core::DebugLog("Not exceeded any limit " + Name(proc_info));
-            }
+            DEBUG_LOG("Not exceeded any limit " + Name(proc_info), 12);
         }
         freeproc(proc_info);
     }
@@ -210,24 +204,21 @@ void ProcessManager::WarnExcess()
         }
         if (!Configuration::KillRoot && proc_info->euid == 0)
         {
-            if (Configuration::Verbosity >= 6)
-            {
-                Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
-            }
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
             freeproc(proc_info);
             continue;
         }
 
         if (proc_info->tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 6);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 6);
             freeproc(proc_info);
             continue;
         }
 
         if (IgnoredId(proc_info->euid))
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 2);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 2);
             freeproc(proc_info);
             continue;
         }
@@ -241,10 +232,7 @@ void ProcessManager::WarnExcess()
             Core::Log("WARNING: Exceeded soft limit - process " + Name(proc_info));
         } else
         {
-            if (Configuration::Verbosity > 12)
-            {
-                Core::DebugLog("Not exceeded any limit " + Name(proc_info));
-            }
+            DEBUG_LOG("Not exceeded any limit " + Name(proc_info), 12);
         }
         freeproc(proc_info);
     }
@@ -278,7 +266,7 @@ void ProcessManager::KillHighest(bool hard)
         {
             if (Configuration::Verbosity >= 6)
             {
-                Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
+                DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by root", 6);
             }
             freeproc(proc_info);
             continue;
@@ -286,14 +274,14 @@ void ProcessManager::KillHighest(bool hard)
 
         if (IgnoredId(proc_info->euid))
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 2);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " owned by ignored account: " + Core::int2String(proc_info->euid), 2);
             freeproc(proc_info);
             continue;
         }
 
         if (proc_info->tid == Configuration::pid && !Configuration::KillSelf)
         {
-            Core::DebugLog("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 6);
+            DEBUG_LOG("Ignoring " + Core::int2String(proc_info->tid) + " which is current instance of this daemon", 6);
             freeproc(proc_info);
             continue;
         }
@@ -334,10 +322,7 @@ void ProcessManager::KillHighest(bool hard)
             current_score = score;
         } else
         {
-            if (Configuration::Verbosity >= 12)
-            {
-                Core::DebugLog("Process " + Name(proc_info) + "is eating less than highest candidate", 12);
-            }
+            DEBUG_LOG("Process " + Name(proc_info) + "is eating less than highest candidate", 12);
         }
         freeproc(proc_info);
     }
