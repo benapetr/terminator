@@ -23,8 +23,11 @@ start killing processes when system is reaching OOM.
 Build
 ======
 You can compile this application just by running
-    cd terminatord
-    scons
+
+```
+cd terminatord
+scons
+```
 
 You need to have scons and either libprocps-dev or libproc-dev installed for it to build
 
