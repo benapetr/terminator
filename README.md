@@ -20,31 +20,13 @@ per process) and kill them if they exceed it, and it can watch the system resour
 start killing processes when system is reaching OOM.
 
 
-Installing
-============
-
-If you are using ubuntu, you can install through ppa:
-
-    sudo add-apt-repository ppa:benapetr/misc
-    sudo apt-get update
-    sudo apt-get install terminatord
-
-Otherwise, you will need to build the package yourself
-
 Build
 ======
 You can compile this application just by running
     cd terminatord
-    make
+    scons
 
-You need to have either libprocps-dev or libproc-dev installed for it to build
-
-Example installation on ubuntu:
-
-    sudo apt-get install make g++ fakeroot libproc-dev
-    ./build-package
-    sudo dpkg -i ../terminatord*.deb
-
+You need to have scons and either libprocps-dev or libproc-dev installed for it to build
 
 Configuration
 ==============
